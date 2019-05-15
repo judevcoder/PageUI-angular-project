@@ -1,4 +1,31 @@
-# Angular
+#About GetProfiles
+
+## Name: Ash Pallickal
+![Alt text](https://github.com/chini9564/seveneo/ "Optional title")
+
+## Company: Getprofiles
+
+## Role: CEO & Founder
+
+### comment
+Ash Pallicial is CEO & Founder of Getprofiles.
+However, he did not have the qualifications and dignity as CEO.
+He is a very fraudulent scam.
+Please refer to this if someone is working with him.
+He likes to make impossible contracts and he wants to change even those contracts easily.
+Once his project is completed he will not pay anything and he will demands impossible something.
+In short, he is a very low quality human with an intelligence that is closer to the animal's brain than the human brain.
+It would not be an exaggeration to say he is animals.
+
+
+#Here are some his profile links
+## https://getprofiles.io/blog/author/pallickal/
+## https://www.linkedin.com/in/ashpallickal/
+## https://twitter.com/ashpallickal?lang=en
+## https://www.facebook.com/public/Ash-Pallickal
+
+
+# Project Name: Seveneo
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
 
