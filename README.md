@@ -1,7 +1,7 @@
 #About GetProfiles
 
 ## Name: Ash Pallickal
-![Alt text](https://github.com/chini9564/seveneo/ "Optional title")
+![Alt text](https://github.com/chini9564/seveneo/s "Optional title")
 
 ## Company: Getprofiles
 
