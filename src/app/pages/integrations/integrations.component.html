@@ -1,0 +1,91 @@
+<div class="container-fluid integrations-crm">
+	<div class="row">
+		<div class="col-lg-2">
+			<h4>Categories</h4>
+		</div>
+		<div class="col-lg-10">
+			<h3>CRM</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2">
+			<p>CRM</p>
+			<p>Marketing automation</p>
+		</div>
+		<div class="col-lg-10 crm-list">
+			<ul>
+				<li *ngFor="let item of integrationItems">
+					<a href="javascript:void(0)" (click)="integrationProcess(item)">
+						<div class="crm-detail">
+							<div class="crm-logo"><img src="{{item.image}}"></div>
+							<div class="crm-title">
+								<p>{{item.title}}</p>
+							</div>
+							<div class="crm-detail-des">
+								<p>{{item.description}}</p>
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg integration-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-20"></i>
+                    </button>
+                    <div class="row-xs-height">
+					    <div class="social-user-profile col-xs-height text-center col-top">
+					        <div class="thumbnail-wrapper d70 b-white">
+					            <img alt="Avatar" width="100" height="100" src="{{item.image}}">
+					        </div>
+					        <br>
+					    </div>
+					    <div class="col-xs-height p-l-20">
+					        <h4 class="no-margin title">{{item.title}}</h4>
+					        <p class="no-margin fs-12">by <a href="javascript:void(0)">Intercom</a>
+					        </p>
+					        <p class="m-t-12 m-t-5 small">{{item.description}}</p>
+					    </div>
+					</div>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-lg-8 left-block">
+                        	<span class="fs-14">Our two-way Salesforce integration makes it easy to capture, nurture and convert leads with Intercom without breaking your existing workflows. Keep leads warm by automatically adding them to targeted, personalized nurture campaigns using data from Salesforce. Automatically assign conversations and segment leads based on Salesforce data such as owner, status and more. And see all the relevant conversations with a lead in Salesforce so you can continue the sale where it left off.</span>
+                        </div>
+                        <div class="col-lg-4">
+                        	<div class="install-btn">
+                        		<button type="button" class="btn btn-block btn-primary">
+                      				<span class="pull-right"><i class="fa fa-sort-down"></i>
+                                    </span>Install now</button>
+                        	</div>
+                        	<div class="m-t-15">
+                        		<p class="m-t-12 small">Find similar apps</p>
+                        	</div>
+                        	<div class="m-t-15" style="display: inline-flex;">
+                        		<button type="button" class="btn btn-default btn-xs">Popular</button>
+                        		<button type="button" class="btn btn-default btn-xs m-l-10">For sales teams</button>
+                        	</div>
+                        	<div class="m-t-15">
+                        		<button type="button" class="btn btn-default btn-xs">CRM</button>
+                        	</div>
+                        	<div class="m-t-15">
+                        		<button type="button" class="btn btn-default btn-xs">Marketing automation</button>
+                        	</div>
+                        	<div class="m-t-30">
+                        		<p class="no-margin fs-12"><a href="javascript:void(0)">Terms of service</a></p>
+                        		<p class="no-margin fs-12"><a href="javascript:void(0)">Privacy policy</a></p>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

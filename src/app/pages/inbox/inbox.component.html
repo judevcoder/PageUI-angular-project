@@ -1,0 +1,361 @@
+<pg-container>
+    <div class="row m-t-50 inbox">
+        <div class="col-lg-9 no-padding">
+            <div class="split-view">
+                <div class="split-list" [class.slideLeft]="isEmailSelected">
+                    <div class="input-group transparent">
+                        <div class="input-group-prepend search-message-filter">
+                            <span class="input-group-text transparent"><i class="pg pg-search m-l-30"></i></span>
+                        </div>
+                        <input type="text" class="form-control search-message-filter" [(ngModel)]="filterKeyword" placeholder="Type anywhere to search" id="filter_keyword" name="filter_keyword" (keyup)="searchContact($event)">
+                    </div>
+                    <pg-list-view-container  class="scrollable full-height">
+                        <pg-list-item>
+                            <li class="item padding-15 inbox-contact-item-{{i}}" *ngFor="let emailGroup of emailList; let i = index" (click)="onSelect(emailGroup.list[0], i)" [class.active]="emailGroup.list[0] === selectedEmail">
+                                <div class="thumbnail-wrapper d32 circular m-t-20"><img alt="" height="40" src="{{emailGroup.contact.dp}}" width="40"></div>
+                                <div class="inline m-l-15">
+                                    <p class="recipients no-margin hint-text small">{{emailGroup.contact.name}}</p>
+                                    <p class="subject no-margin">{{emailGroup.list[0].subject}}</p>
+                                    <p class="body no-margin" innerHTML="{{emailGroup.list[0].body}}"></p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        </pg-list-item>
+                    </pg-list-view-container>
+                </div>
+                <div class="split-details">
+                    <ng-template #noResultBlock>
+                        <div class="no-result">
+                            <h1>No email has been selected</h1>
+                        </div>
+                    </ng-template>
+                    <div *ngIf="selectedEmail; else noResultBlock" class="email-content-wrapper inbox-email-content">
+                        <div class="actions-wrapper menuclipper bg-master-lightest scrollable">
+                            <ul class="actions menuclipper-menu no-margin p-l-20 d-flex">
+                                <li class="d-lg-none d-xl-none">
+                                    <a href="javascript:void(0;)" (click)="onBack()" class="split-list-toggle"><i class="fa fa-angle-left"></i> All Inboxes</a>
+                                </li>
+                                <li class="no-padding "><a href="javascript:void(0)" class="text-info" (click)="showReplyEditor()">Reply</a>
+                                </li>
+                                <li class="no-padding">
+                                    <a href="javascript:void(0)" *ngIf="selectedEmail.status == 'unread'; else mark_as_unread" (click)="markAsRead($event)">Mark as read</a>
+                                    <ng-template #mark_as_unread>
+                                        <a href="javascript:void(0)" (click)="markAsUnread($event)">Mark as unread</a>
+                                    </ng-template>
+                                </li>
+                                <li class="no-padding "><a href="javascript:void(0)" class="text-danger">Delete</a>
+                                </li>
+                            </ul>
+                        <div class="clearfix"></div>
+                        </div>
+                        <div class="email-content">
+                            <div class="email-content-header">
+                                <div class="thumbnail-wrapper d48 circular bordered">
+                                    <img width="40" height="40" alt="" src="{{profileData.image}}">
+                                </div>
+                                <div class="sender inline m-l-10">
+                                    <p class="name no-margin bold">
+                                        {{profileData.contactDetails.name}}
+                                    </p>
+                                    <p class="datetime no-margin">
+                                        {{profileData.businessEmail.email}}
+                                    </p>
+                                    <p class="datetime no-margin">
+                                        {{selectedEmail.from.email}}
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="subject m-t-20 m-b-50 semi-bold email-subject">
+                                    Subject - {{selectedEmail.subject}}
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="email-content-body m-t-20" innerHTML="{{selectedEmail.body}}">
+                            </div>
+                            <div class="wysiwyg5-wrapper b-a b-grey m-t-30 reply-editor" style="display: none;">
+                                <quill-editor [style]="{height: '200px'}" placeholder="Reply" [modules]="editorModules">
+                                </quill-editor>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 no-padding person-info-scrollable-card">
+            <div class="scrollbar" id="custom_scrollbar">
+                <div class="force-overflow">
+                    <div class="profile-section">
+                        <div style="display: inline-flex; width: 100%;">
+                            <div class="profile-image">
+                                <div class="thumbnail-wrapper d48 circular bordered m-t-10 m-l-10">
+                                    <img width="40" height="40" alt="" src="{{profileData.image}}">
+                                </div>
+                            </div>
+                            <div class="name">
+                                <p class="profile-name">{{profileData.contactDetails.name}}</p>
+                                <div class="social-icon-group">
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-facebook"></span></a>
+                                </div>
+                            </div>
+                            <!-- <div class="more-icon"><a href="javascript:void(0)"><span><i class="fa fa-ellipsis-v"></i></span></a></div> -->
+                            <div class="more-icon dropdown pull-right d-lg-block d-none">
+                                <button class="profile-dropdown-toggle more-icon-btn" type="button">
+                                    <span><i class="fa fa-ellipsis-v"></i></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <a href="javascript:void(0)" class="dropdown-item">Mark as Lead</a>
+                                    <a href="javascript:void(0)" class="dropdown-item">Unsubscribe</a>
+                                    <a href="javascript:void(0)" class="dropdown-item">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-margin position" style="font-size: 12px;">
+                            <span><i class="fa fa-map-marker"></i></span>
+                            <span class="m-l-15">11:00 AM in {{profileData.city}}, {{profileData.state}}</span>
+                        </div>
+                        <div class="row no-margin pointer">
+                            <span class="m-l-15"><i class="fa fa-eye"></i></span>
+                            <span class="m-l-15"><i class="fa fa-hand-o-up"></i></span>
+                            <span class="m-l-15"><i class="fa fa-mail-reply"></i></span>
+                        </div>
+                        <div class="row no-margin position" style="font-size: 16px;">
+                            <span><i class="fa fa-user-md"></i></span>
+                            <span class="m-l-15">{{profileData.contactDetails.role}}, Email</span>
+                        </div>
+                        <div class="row no-margin position">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text transparent">
+                                    <a href="mailto: {{ profileData.businessEmail.email }}" style="height: 15px;">
+                                        <span class="pg pg-mail email-status-{{ profileData.businessEmail.status }}"></span>
+                                    </a>
+                                </span>
+                            </div>
+                            <input type="text" placeholder="Username" class="form-control profile-email" value="{{ profileData.businessEmail.email }}" disabled>
+                            <div class="input-group-append">
+                                <div class="copy-email-tooltip" (click)="copyEmail(profileData.businessEmail.email)" (mouseover)="initialText()">
+                                    <span class="copy-icon"><i class="fa fa-copy detail-icon"></i></span>
+                                    <span class="tooltiptext" id="myTooltip">Copy Email</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-margin position" style="font-size: 12px;">
+                            <span><i class="fa fa-phone"></i></span>
+                            <span class="m-l-15">+1 {{ profileData.phone }}</span>
+                        </div>
+                        <div class="row no-margin position profile-description" style="font-size: 12px;">
+                            <div><span><i class="fa fa-file-text-o"></i></span></div>
+                            <div class="m-l-15">
+                                <ng-container  *ngIf="longProfileDes;then view_more_pro; else short_pro_des">
+                                </ng-container>
+                                <ng-template #view_more_pro>
+                                    <ng-container  *ngIf="viewMoreProfile; else full_description">
+                                        <span class="description">{{ profileData.description | slice:0:74 }}</span><a href="javascript:void(0)" (click)="showMoreDetail('profile')"><span>... view more</span></a>
+                                    </ng-container>
+                                    <ng-template #full_description>
+                                        <span class="full-description">{{ profileData.description }}</span><a href="javascript:void(0)" (click)="showLess('profile')"><span>... less</span></a>
+                                    </ng-template>
+                                </ng-template>
+                                <ng-template #short_pro_des>
+                                    <span class="full-description">{{ profileData.description }}</span>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="row no-margin position">
+                            <span><i class="fa fa-university"></i></span>
+                            <span class="m-l-15">{{profileData.university}}</span>
+                        </div>
+                    </div>
+                    <div class="company-section m-t-30">
+                        <div style="display: inline-flex;">
+                            <div class="profile-image">
+                                <div class="thumbnail-wrapper d48 circular bordered m-t-10 m-l-10">
+                                    <img width="40" height="40" alt="" src="{{profileData.companyDetails.image}}">
+                                </div>
+                            </div>
+                            <div class="name">
+                                <p class="profile-name">{{profileData.companyDetails.name}}</p>
+                                <div class="social-icon-group">
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                                    <a href="javascript:void(0)"><span class="social-icon fa fa-facebook"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 12px;">
+                            <span><i class="fa fa-globe"></i></span>
+                            <a href="http://{{profileData.companyDetails.link}}"><span class="m-l-15">{{profileData.companyDetails.link}}</span></a>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 10px;">
+                            <span><i class="fa fa-map-marker"></i></span>
+                            <span class="m-l-15">{{profileData.companyDetails.address}}</span>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 12px;">
+                            <span><i class="fa fa-phone"></i></span>
+                            <span class="m-l-15">{{profileData.companyDetails.phone}}</span>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 12px;">
+                            <span><i class="fa fa-area-chart"></i></span>
+                            <span class="m-l-15">Retail</span>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 12px;">
+                            <span><i class="fa fa-group"></i></span>
+                            <span class="m-l-15">51-200</span>
+                        </div>
+                        <div class="row no-margin company-position" style="font-size: 12px;">
+                            <span><i class="fa fa-university"></i></span>
+                            <span class="m-l-15">51-200</span>
+                        </div>
+                        <div class="row no-margin company-position profile-description" style="font-size: 12px;">
+                            <div><span><i class="fa fa-file-text-o"></i></span></div>
+                            <div class="m-l-15">
+                                <ng-container  *ngIf="longCompanyDes;then view_more_com; else short_com_des">
+                                </ng-container>
+                                <ng-template #view_more_com>
+                                    <ng-container  *ngIf="viewMoreCompany; else com_full_description">
+                                        <span class="description">{{ profileData.companyDetails.description | slice:0:74 }}</span><a href="javascript:void(0)" (click)="showMoreDetail('company')"><span>... view more</span></a>
+                                    </ng-container>
+                                    <ng-template #com_full_description>
+                                        <span class="full-description">{{ profileData.companyDetails.description }}</span><a href="javascript:void(0)" (click)="showLess('company')"><span>... less</span></a>
+                                    </ng-template>
+                                </ng-template>
+                                <ng-template #short_com_des>
+                                    <span class="full-description">{{ profileData.companyDetails.description }}</span>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="row" style="font-size: 12px; margin: 30px 5px 5px 5px;">
+                            <div class="card card-transparent inbox-notes" style="height: auto;">
+                                <div class="notes-header">
+                                    <p>Notes</p>
+                                    <a href="javascript:void(0)" (click)="showAddNotesModal()">+ Add</a>
+                                </div>
+                                <div class="notes-body" *ngIf="notesList.length > 0">
+                                    <div class="notes-block" *ngIf="showMore; else show_notes">
+                                        <div class="notes-text">
+                                            <p class="small">{{notesList[0].content}}</p>
+                                            <div class="dropdown pull-right d-lg-block d-none note-dropdown" dropdown style="margin-left: 20px;">
+                                                <button class="profile-dropdown-toggle" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+                                                    <span><i class="fa fa-ellipsis-h"></i></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" style="right: -10px !important; width: 110px;">
+                                                    <a href="javascript:void(0)" class="dropdown-item" (click)="editNote(i)">Edit</a>
+                                                    <a href="javascript:void(0)" class="dropdown-item" (click)="deleteNote(i)">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="notes-date">
+                                            <p class="small">{{notesList[0].createdAt | date: 'MMM d, y'}}</p>
+                                        </div>
+                                    </div>
+                                    <ng-template #show_notes>
+                                        <div class="notes-block more-note-block" *ngFor="let note of notesList; let i = index">
+                                            <div class="notes-text">
+                                                <p class="small">{{note.content}}</p>
+                                                <div class="dropdown pull-right d-lg-block d-none note-dropdown" dropdown style="margin-left: 20px;">
+                                                    <button class="profile-dropdown-toggle" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+                                                        <span><i class="fa fa-ellipsis-h"></i></span>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" style="right: -10px !important; width: 110px;">
+                                                        <a href="javascript:void(0)" class="dropdown-item" (click)="editNote(i)">Edit</a>
+                                                        <a href="javascript:void(0)" class="dropdown-item" (click)="deleteNote(i)">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="notes-date">
+                                                <p class="small">{{note.createdAt | date: 'MMM d, y'}}</p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <div class="show-hide">
+                                    <a href="javascript:void(0)" class="small" *ngIf="showMore" (click)="showAllNotes()">Show more</a>
+                                    <a href="javascript:void(0)" class="small" *ngIf="hideNote" (click)="hideNotes()">hide</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="font-size: 12px; margin: 5px;">
+                            <div class="card card-transparent inbox-tags inbox-notes" style="height: auto;">
+                                <div class="notes-header">
+                                    <span class="tag-title">Tags</span>
+                                    <span class="m-l-20"><i class="fa fa-gear"></i></span>
+                                    <a href="javascript:void(0)" (click)="showAddTagModal()">+ Add</a>
+                                </div>
+                                <div class="notes-body tag-body" *ngIf="tagList.length > 0">
+                                    <div class="notes-block">
+                                        <div class="ele-tag" *ngFor="let tag of tagList; let i = index">
+                                            <span><i class="fa fa-tag"></i></span>
+                                            <span class="m-l-5">{{tag}}</span>
+                                            <span class="m-l-5" (click)="removeTag(i)" style="cursor: pointer;"><i class="fa fa-times-circle"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</pg-container>
+
+<div bsModal #NotesModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg notes-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="NotesModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Notes</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>ADD A NOTE</label>
+                            <textarea [(ngModel)]="noteContent"></textarea>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="NotesModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="addNotes()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #TagModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg Tag-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="TagModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Tag User</span></h5>
+                </div>
+                <div class="modal-body no-padding no-margin">
+                    <div class="add-tags col-md-12 no-padding">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text transparent"><i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                        <div class="form-group typehead">
+                            <input placeholder="States of USA" [(ngModel)]="selectedTag" [typeahead]="availableTags"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:void(0)" style="margin-right: auto;">
+                        <span>Manage Tags</span>
+                        <span class="m-l-20"><i class="fa fa-gear"></i></span>
+                    </a>
+                    <button class="btn btn-primary" (click)="addTag(selectedTag)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,212 @@
+[
+	{
+		"id": 1,
+		"email": "ash.pallickal@gmail.com",
+		"type": "2nd message",
+		"date": "2019-04-10 05:03:42",
+		"stats": "opened"
+	},
+	{
+		"id": 2,
+		"email": "ash.pallickal@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-17 07:01:58",
+		"stats": "sent"
+	},
+	{
+		"id": 3,
+		"email": "msageernk@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-12 04:21:03",
+		"stats": "sent"
+	},
+	{
+		"id": 4,
+		"email": "lisa@prospexintel.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-19 19:00:17",
+		"stats": "sent"
+	},
+	{
+		"id": 5,
+		"email": "pallickal@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-15 19:04:00",
+		"stats": "sent"
+	},
+	{
+		"id": 6,
+		"email": "ash@getprofiles.net",
+		"type": "Follow-up 1",
+		"date": "2019-04-15 03:40:50",
+		"stats": "sent"
+	},
+	{
+		"id": 7,
+		"email": "jason@leadsays.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-13 00:02:58",
+		"stats": "sent"
+	},
+	{
+		"id": 8,
+		"email": "pallickal@getprofiles.net",
+		"type": "Follow-up 1",
+		"date": "2019-04-19 18:50:14",
+		"stats": "sent"
+	},
+	{
+		"id": 9,
+		"email": "joshsulliava@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-11 11:05:47",
+		"stats": "sent"
+	},
+	{
+		"id": 10,
+		"email": "mark@getprofiles.co",
+		"type": "Follow-up 1",
+		"date": "2019-04-23 02:30:26",
+		"stats": "sent"
+	},
+	{
+		"id": 11,
+		"email": "pallickal@getprofiles.net",
+		"type": "Initial email",
+		"date": "2019-04-20 20:13:23",
+		"stats": "sent"
+	},
+	{
+		"id": 12,
+		"email": "jason@leadsays.com",
+		"type": "Initial email",
+		"date": "2019-04-23 05:47:03",
+		"stats": "sent"
+	},
+	{
+		"id": 13,
+		"email": "pallickal@gmail.com",
+		"type": "Initial email",
+		"date": "2019-04-14 01:16:47",
+		"stats": "sent"
+	},
+	{
+		"id": 14,
+		"email": "ash.pallickal@gmail.com",
+		"type": "Initial email",
+		"date": "2019-04-23 01:51:02",
+		"stats": "opened"
+	},
+	{
+		"id": 15,
+		"email": "ash@getprofiles.com",
+		"type": "Initial email",
+		"date": "2019-04-23 01:51:02",
+		"stats": "sent"
+	},
+	{
+		"id": 16,
+		"email": "ash.pallickal@gmail.com",
+		"type": "2nd message",
+		"date": "2019-04-10 05:03:42",
+		"stats": "opened"
+	},
+	{
+		"id": 17,
+		"email": "ash.pallickal@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-17 07:01:58",
+		"stats": "sent"
+	},
+	{
+		"id": 18,
+		"email": "msageernk@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-12 04:21:03",
+		"stats": "sent"
+	},
+	{
+		"id": 19,
+		"email": "lisa@prospexintel.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-19 19:00:17",
+		"stats": "sent"
+	},
+	{
+		"id": 20,
+		"email": "pallickal@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-15 19:04:00",
+		"stats": "sent"
+	},
+	{
+		"id": 21,
+		"email": "ash@getprofiles.net",
+		"type": "Follow-up 1",
+		"date": "2019-04-15 03:40:50",
+		"stats": "sent"
+	},
+	{
+		"id": 22,
+		"email": "jason@leadsays.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-13 00:02:58",
+		"stats": "sent"
+	},
+	{
+		"id": 23,
+		"email": "pallickal@getprofiles.net",
+		"type": "Follow-up 1",
+		"date": "2019-04-19 18:50:14",
+		"stats": "sent"
+	},
+	{
+		"id": 24,
+		"email": "joshsulliava@gmail.com",
+		"type": "Follow-up 1",
+		"date": "2019-04-11 11:05:47",
+		"stats": "sent"
+	},
+	{
+		"id": 25,
+		"email": "mark@getprofiles.co",
+		"type": "Follow-up 1",
+		"date": "2019-04-23 02:30:26",
+		"stats": "sent"
+	},
+	{
+		"id": 26,
+		"email": "pallickal@getprofiles.net",
+		"type": "Initial email",
+		"date": "2019-04-20 20:13:23",
+		"stats": "sent"
+	},
+	{
+		"id": 27,
+		"email": "jason@leadsays.com",
+		"type": "Initial email",
+		"date": "2019-04-23 05:47:03",
+		"stats": "sent"
+	},
+	{
+		"id": 28,
+		"email": "pallickal@gmail.com",
+		"type": "Initial email",
+		"date": "2019-04-14 01:16:47",
+		"stats": "sent"
+	},
+	{
+		"id": 29,
+		"email": "ash.pallickal@gmail.com",
+		"type": "Initial email",
+		"date": "2019-04-23 01:51:02",
+		"stats": "opened"
+	},
+	{
+		"id": 30,
+		"email": "ash@getprofiles.com",
+		"type": "Initial email",
+		"date": "2019-04-23 01:51:02",
+		"stats": "sent"
+	}
+]

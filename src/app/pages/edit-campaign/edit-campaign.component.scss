@@ -1,0 +1,609 @@
+@import '~@swimlane/ngx-dnd/release/index.css';
+
+.edit-save-btn {
+  color: inherit;
+}
+
+.save-btn {
+  margin-top: 9px;
+}
+
+@media only screen and (min-width: 768px) {} @media only screen and (min-width: 1170px) {
+  .timeline-container:not(.left) {
+    .timeline {
+      .timeline-content {
+        margin-left: 0;
+        width: 46%;
+        &::before {
+          top: 24px;
+          left: 100%;
+          border-color: transparent;
+          border-left-color: white;
+        }
+        &.is-hidden {
+          visibility: hidden;
+        }
+        &.bounce-in {
+          visibility: visible;
+          -webkit-animation: cd-bounce-2 0.6s;
+          -moz-animation: cd-bounce-2 0.6s;
+          animation: cd-bounce-2 0.6s;
+        }
+        .event-date {
+          position: absolute;
+          width: 100%;
+          left: 118%;
+          top: -2px;
+          font-size: 16px;
+          font-size: 1rem;
+          small {
+            margin-top: 13px;
+            display: block;
+          }
+          h6 + small {
+            margin-top: 0;
+          }
+        }
+      }
+      .timeline-block {
+        .timeline-content {
+          width: 78% !important;
+          float: right;
+          &::before {
+            top: 24px;
+            left: auto;
+            right: 100%;
+            border-color: transparent;
+            border-right-color: white;
+          }
+          .event-date {
+            left: auto;
+            right: 118%;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
+.timeline-container {
+}
+@media only screen and (min-width: 1170px) {
+  .timeline-container:not(.left) {
+    .timeline {
+      margin-bottom: 0;
+      &::before {
+        left: 16%;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 1170px) {
+  .timeline-container:not(.left) {
+    .timeline {
+      .timeline-point {
+        left: 18%;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.campaign-detail .nav-tabs-wrapper {
+  width: 430px;
+  margin: auto;
+}
+
+#campaign_detail_overview .nav-tabs-wrapper {
+  width: 100%;
+  margin-left: 0;
+}
+
+.campaign-detail .action-message {
+  position: absolute;
+  margin-top: -97px;
+  right: 40px;
+  z-index: 99;
+}
+
+.card.social-card {
+  background: none !important;
+  border: none !important;
+}
+
+.timeline {
+  padding: 0 0 1em 0;
+
+}
+
+#campaign_detail_overview .btn-group.btn-group-toggle label {
+  width: 60px;
+  height: 35px;
+}
+
+.card-controls {
+  margin-top: 10px !important;
+  margin-right: 30px;
+}
+
+.card-icon-settings {
+  font-size: 22px;
+}
+
+.card-icon-settings:hover {
+  color: blue;
+}
+
+.card-icon-settings:visited {
+  color: blue;
+}
+
+.font-montserrat {
+  font-size: 13px;
+}
+
+.campaign-chart {
+  width: 80%;
+}
+
+.input-campaign-name {
+    background: #f5f9fa;
+    border: none;
+    color: #000;
+    height: 35px;
+    margin-top: -9px;
+}
+
+.campaign-name {
+  display: inline-flex;
+}
+
+.display-name {
+  height: 40px;
+}
+
+.toogle-options {
+  float: right;
+}
+
+.filter-dorpdown .pg-select {
+  border: 1px solid #007bff;
+    border-radius: 3px;
+    .pg-select-selection {
+      background-color: #f5f9fa;
+    }
+}
+
+.pg-select-selection__placeholder {
+  color: #000;
+}
+
+.activity-box {
+    height: 350px;
+    overflow: auto;
+    box-shadow: 0 2px 8px rgba(57,73,76,0.35);
+    ul {
+      padding: 0 15px;
+    }
+    ul > li {
+      list-style-type: none;
+      padding: 4px 0;
+      border-bottom: 1px solid #eaecee;
+    }
+
+    ul > li:last-child {
+      border-bottom: none;
+    }
+
+    div {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    padding: 15px 0 2px 0;
+}
+
+.filter-activity-dropdown {
+  padding: 0;
+}
+
+.fake-text {
+  opacity: 0;
+  z-index: -99;
+}
+
+.input-textarea {
+  padding: 30px 20px 35px 20px !important;
+}
+
+.quill-editor-toolbar {
+  background-color: #fff !important;
+  position: absolute;
+    margin-top: 175px;
+    height: 40px;
+}
+
+.add-message {
+    font-size: 16px;
+}
+
+.card.card-default {
+  margin-bottom: 10px;
+    border: 1px solid #000 !important;
+    border-radius: 7px !important;
+}
+
+.addon {
+  border: 1px solid !important;
+    border-radius: 0 !important;
+}
+
+.message-preview-box {
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background: #f6f9fa;
+  color: #000;
+  width: 100%;
+}
+
+.profile-email.form-control[disabled], .profile-email.form-control[readonly], fieldset[disabled] .profile-email.form-control {
+  width: 65%;
+}
+
+.campaign-detail .list-view-wrapper {
+  height: 95% !important;
+  background: #f6f9fa;
+}
+
+.campaign-detail .list-view-group-container {
+  padding: 0;
+}
+
+.campaign-detail .list-view li:hover {
+  background-color: inherit;
+}
+
+.campaign-detail .split-view {
+    position: relative;
+    // min-height: 670px;
+    height: 670px;
+    width: 100%;
+    border: 1px solid #d7dde0;
+}
+
+.campaign-detail .split-view .split-list {
+  overflow-y: hidden;
+}
+
+.campaign-detail .split-view .split-list .list-view-fake-header, .split-view .split-list .list-view-group-header {
+  z-index: -99;
+}
+
+.campaign-detail .split-view .split-details .email-content-wrapper .actions-wrapper {
+  z-index: 0;
+}
+
+.search-message-filter {
+  background: #f6f9fa;
+  span {
+    border-left: none;
+    border-top: none;
+  }
+}
+
+#filter_keyword {
+  border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
+#filter_keyword:focus {
+  background-color: #f6f9fa;
+}
+
+.select-email-btn {
+    height: 35px;
+    width: 35px;
+    padding: 5px 10px 5px 14px;
+}
+
+.campaign-detail .split-view .split-list .item {
+  cursor: default;
+}
+
+@media (max-width: 979px) {
+  .campaign-detail .split-view .split-list  {
+    z-index: 1;
+  }
+}
+
+
+.scrollbar
+{
+  float: left;
+  height: 670px;
+  width: 100%;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+  border: 1px solid #d7dde0;
+  border-left: none;
+}
+
+.force-overflow
+{
+  min-height: 450px;
+}
+
+#custom_scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+#custom_scrollbar::-webkit-scrollbar-track {
+  // box-shadow: inset 0 0 5px grey; 
+  // border-radius: 10px;
+}
+ 
+/* Handle */
+#custom_scrollbar::-webkit-scrollbar-thumb {
+  background: #DDE1E4;
+}
+
+/* Handle on hover */
+#custom_scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #A1A9B4;
+}
+
+.profile-image .thumbnail-wrapper.bordered.d48 {
+  border: 3px solid #fff;
+}
+
+.email-status-primary {
+    color: #00e8ba;
+}
+
+.email-status-success {
+    color: #0064bc;
+}
+
+.email-status-danger {
+    color: red;
+}
+
+.profile-name {
+    margin-top: 15px !important;
+    margin-left: 20px !important;
+    font-size: 16px;
+}
+
+.more-icon {
+    margin-left: 10px;
+    margin-top: 14px;
+    height: 20px;
+}
+
+.more-icon a {
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
+}
+
+.more-icon:hover {
+  .more-icon-btn {
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    display: block;
+  }
+}
+
+.position {
+  margin-left: 25px !important;
+    margin-top: 20px !important;
+}
+
+.social-icon {
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    background: #007bb6;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.name {
+    width: 240px;
+}
+
+.social-icon-group {
+    margin-left: 20px;
+}
+
+.fa-map-marker {
+  color: #ee6a86;
+}
+
+.fa-user-md {
+  color: #4aa1ed;
+}
+
+.pointer span {
+  color: #000;
+}
+
+.pointer {
+    margin-left: 60px !important;
+    margin-top: 10px !important;
+}
+
+.fa-phone {
+  color: #4ca1ed;
+}
+
+.profile-description .m-l-15 {
+  width: 280px;
+}
+
+.fa-university {
+  color: #f78a17;
+}
+
+.company-position {
+  margin-left: 25px !important;
+    margin-top: 10px !important;
+}
+
+.fa-globe {
+  color: #4aa1ed;
+}
+
+.fa-area-chart {
+  color: #e63d4a;
+}
+
+.fa-group {
+  color: #004a8b;
+}
+
+.company-position .fa-university {
+  color: #136f63
+}
+
+.person-info-scrollable-card pg-select{
+    position: absolute;
+    top: -50px;
+    width: 150px;
+    margin-left: 56%;
+}
+
+@media (max-width: 991px) {
+  .person-info-scrollable-card {
+    padding: 10px 0 !important;
+    #custom_scrollbar {
+      border: 1px solid #d7dde0 !important;
+    }
+  }
+}
+
+.email-settings-input {
+  height: 45px;
+    border-radius: 5px;
+}
+
+.track-info {
+  float: right;
+  margin-top: 12px;
+}
+
+.blue-circle-icon {
+  color: #0064bc;
+}
+
+#track_open {
+  float: left;
+}
+
+.email-settings-dropdown .pg-select-selection--single{
+  height: 45px;
+}
+
+.email-settings-dropdown .pg-select-selection-selected-value {
+    margin-top: 5px;
+}
+
+.email-settings-dropdown .pg-select-selection__placeholder, .pg-select-search__field__placeholder {
+  margin-top: -5px;
+}
+
+.time-picker-input {
+  height: 45px;
+    border-left: none;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#campaign_detail_overview {
+  .tab-content-wrapper {
+    border-right: none;
+  }
+
+  .nav-wrap {
+    height: 86px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-wrap:after {
+    border-bottom: none;
+  }
+
+}
+
+.set-follow-subject {
+  position: absolute;
+  display: inline-flex;
+  margin-top: -41px;
+  width: 100%;
+  z-index: 10;
+
+  pg-select {
+    width: 13%;
+    border: 1px solid;
+    height: 37px;
+  }
+
+  input {
+    margin-left: 15px;
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    height: 30px;
+    margin-top: 4px;
+  }
+
+  .exchange-icon {
+    padding: 8px;
+    margin-left: -30px;
+  }
+}
+
+.on-click-info-icon {
+  position: absolute;
+  margin-top: -65px;
+  margin-left: 135px;
+}
+
+.set-on-subject {
+  position: absolute;
+  display: inline-flex;
+  margin-top: -41px;
+  width: 100%;
+  z-index: 10;
+
+  pg-select {
+    width: 13%;
+    border: 1px solid;
+    height: 37px;
+  }
+
+  input {
+    margin-left: 30px;
+    width: 37%;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    height: 30px;
+    margin-top: 4px;
+  }
+
+  .question-icon {
+    padding: 8px;
+    margin-left: -30px; 
+  }
+}

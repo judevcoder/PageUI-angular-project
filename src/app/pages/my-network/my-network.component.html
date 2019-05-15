@@ -1,0 +1,288 @@
+<div class="container-fluid">
+    <div class="m-t-50 network">
+        <pg-container extraHorizontalClass="bg-white" extraClass="bg-white">
+            <div class="card card-transparent">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group row-left" style="width: 180px;">
+                                <div class="dropdown dropdown-default" style="width: 100%;" dropdown>
+                                    <button class="btn dropdown-toggle text-center found-record-dropdown-btn" type="button" style="width: 100%;" (click)="toogleRecordDropdown($event)" dropdownToggle>
+                                        Found 7221 records
+                                    </button>
+                                    <div class="found-record-dropdown dropdown-menu">
+                                        <a href="javascript:void(0)" class="dropdown-item" attr.data-value="{{option.value}}" tabIndex="-1" *ngFor="let option of optionsList; let i = index">
+                                            <div class="checkbox check-primary">
+                                                <input type="checkbox" value="1" id="option_checkbox_{{i}}">&nbsp;
+                                                <label for="option_checkbox_{{i}}">{{option.label}}</label>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row-left">
+                                <div class="dropdown dropdown-default" dropdown>
+                                    <button class="btn dropdown-toggle text-center" type="button" dropdownToggle>
+                                        {{(selectedOptionlist? selectedOptionlist: 'All lists')}}
+                                    </button>
+                                    <div *dropdownMenu class="dropdown-menu" role="menu">
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="listSelect($event)">Default</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="listSelect($event)">My List</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row-left" *ngIf="selected.length > 0">
+                                <div class="dropdown dropdown-default" dropdown>
+                                    <button class="btn dropdown-toggle text-center" type="button" dropdownToggle>
+                                        {{(selectedMoveTo? selectedMoveTo: 'Move to')}}
+                                    </button>
+                                    <div *dropdownMenu class="dropdown-menu" role="menu">
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="moveToSelect($event)">Default</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="moveToSelect($event)">My List</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row-left" *ngIf="selected.length > 0">
+                                <div class="trash-btn">
+                                    <a href="javascript:void(0)" style="color: inherit"><span class="fa fa-trash" style="font-size: 20px;"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group row-right">
+                                <div class="dropdown pull-right d-lg-block d-none" dropdown>
+                                    <button class="profile-dropdown-toggle btn" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+                                        <span class="fa fa-filter"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown filter-dropdown" *dropdownMenu role="menu">
+                                        <a class="dropdown-item" href="javascript:void(0)">All</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Interested</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Follow-up</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Won</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Sent</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Opened</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Clicked</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Replied</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Unsubscribed</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Completed</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Pending</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">In process</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row-right">
+                                <div class="dropdown dropdown-default" dropdown>
+                                    <button class="btn dropdown-toggle text-center" type="button" dropdownToggle>
+                                        {{selectedOptionMore}}
+                                    </button>
+                                    <div *dropdownMenu class="dropdown-menu" role="menu">
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="moreSelect($event)">Import</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" (click)="moreSelect($event)">Export</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" style="height:600px;">
+                        <ngx-datatable 
+                        #tableAdvance 
+                        class='table table-hover table-stripped' 
+                        [columnMode]="columnModeSetting" 
+                        [scrollbarH]="scrollBarHorizontal" 
+                        [headerHeight]="60" 
+                        [footerHeight]="50" 
+                        [rowHeight]="90" 
+                        [scrollbarV]="true" 
+                        [selected]="selected" 
+                        [selectionType]="'checkbox'" 
+                        [rows]='advanceRows' 
+                        (select)='onSelect($event)' 
+                        (activate)="onActivate($event)">
+                            <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false" name="Image">
+                                <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                                    <div class="checkbox check-success d-flex align-items-center">
+                                        <input type="checkbox" value="0" id="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+                                        <label for="checkbox"></label>
+                                    </div>
+                                </ng-template>
+                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                    <div class="checkbox image-checkbox check-success d-flex align-items-center hidden">
+                                        <input type="checkbox" value="1" id="checkbox_{{rowIndex}}"  [checked]="isSelected" (change)="onCheckboxChangeFn($event)">
+                                        <label for="checkbox_{{rowIndex}}"></label>
+                                    </div>
+                                    <span class="thumbnail-wrapper d32 circular inline" id="{{rowIndex}}">
+                                        <img alt="" height="32" pgretina="" src="{{value}}">
+                                    </span>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [sortable]="false" name="Contact Details">
+                                <ng-template ngx-datatable-header-template let-value="value">
+                                    Contact Details
+                                </ng-template>
+                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+                                    <div>
+                                        <a href="/prospector/network/profile/{{value.id}}"><span>{{ value.name }}</span></a>
+                                        <span>&nbsp;</span>
+                                        <a href="javascript:void(0)" (click)="openEditpage(value.id)"><span class="fa fa-edit" style="color: #00e8ba"></span><span>&nbsp;</span></a>
+                                        <br/>
+                                        <span>{{ value.role }}</span>
+                                        <br/>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.linkedin == 'true'"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.twitter == 'true'"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.facebook == 'true'"><span class="social-icon fa fa-facebook"></span></a>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [sortable]="false" name="Business Email">
+                                <ng-template ngx-datatable-header-template let-value="value">
+                                    Business Email
+                                </ng-template>
+                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+                                    <div class="input-group transparent">
+                                        <div class="input-group-prepend email-input-field">
+                                            <span class="input-group-text transparent">
+                                                <a href="mailto: {{ value.email }}" style="height: 15px;">
+                                                    <span class="pg pg-mail email-status-{{ value.status }}"></span>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <input type="text" placeholder="Username" class="form-control" value="{{ value.email }}" disabled>
+                                        <div class="input-group-append">
+                                            <div class="copy-email-tooltip" (click)="copyEmail(value.email)" (mouseover)="initialText()">
+                                                <span class="copy-icon input-group-text transparent"><i class="fa fa-copy detail-icon"></i></span>
+                                                <span class="tooltiptext" id="myTooltip">Copy Email</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [sortable]="false" name="Company Details">
+                                <ng-template ngx-datatable-header-template let-value="value">
+                                    Company Details
+                                </ng-template>
+                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+                                    <div>
+                                        <span><strong>{{ value.name }}</strong></span>
+                                        <br/>
+                                        <a href="http://{{value.link}}"><span class="fa fa-globe"></span><span>&nbsp;</span><span>{{ value.link }}</span><br/></a>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.linkedin == 'true'"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.twitter == 'true'"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" *ngIf="value.linkedSocial.facebook == 'true'"><span class="social-icon fa fa-facebook"></span></a>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [sortable]="false" name="id">
+                                <ng-template ngx-datatable-header-template let-value="value">
+                                    Actions
+                                </ng-template>
+                                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+                                    <div>
+                                        <a href="/prospector/network/profile/{{value}}" class="action-i"><span><img src="assets/img/actions/moreinfo.png"></span><span>&nbsp;</span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" class="action-i"><span><img src="assets/img/actions/companies.png"></span><span>&nbsp;</span><span>&nbsp;</span></a>
+                                        <a href="javascript:void(0)" class="action-i" style="color: inherit; font-size: 17px;"><span class="pg pg-ui"></span></a>
+                                    </div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+        </pg-container>
+    </div>
+</div>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Import your leads from a CSV</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <form role="form">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <ul>
+                                            <li class="step-upload-csv current-step">
+                                                <span class="dot">
+                                                    <i class="step-num">1</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Upload CSV</span>
+                                            </li>
+                                            <li class="step-map-attribute">
+                                                <span class="dot">
+                                                    <i class="step-num">2</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Map attributes</span>
+                                            </li>
+                                            <li class="step-import">
+                                                <span class="dot">
+                                                    <i class="step-num">3</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Import</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="upload-csv-section b-dashed m-t-50 col-md-10 offset-md-1 p-t-30">
+                                    <ng-container *ngIf="fileName; else uploading">
+                                        <div class="uploaded-csv">
+                                            <span class="fa fa-file-archive-o"></span><span>&nbsp;</span><span><strong>{{fileName}}</strong></span>
+                                            <a href="javascript:void(0)" (click)="removeSelectedFile()"><p class="hint-text">remove</p></a>
+                                            <button class="m-t-20 btn btn-primary btn-cons" (click)="uploadFile()">Upload</button> 
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #uploading>
+                                        <div class="uploading-csv">
+                                            <h5><strong>Drag and drop your CSV file here</strong></h5>
+                                            <input type="file" class="hidden file-select" (change)="selectFile($event)">
+                                            <a href="javascript:void(0)" (click)="uploadEvent()">Or select a file from your computer...</a>
+                                            <p class="hint-text m-t-20">Your CSV must have an email address and full names for each person.</p>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <div class="map-attributes col-md-10 offset-md-1 p-t-30 hidden">
+                                    <div class="row">
+                                        <div class="col-md-5 show-data" style="padding-right: 0px;">
+                                            <div class="column"><h4 class="m-l-30"><strong>Column 1</strong></h4></div>
+                                            <div class="column-name p-l-30"><p class="m-l-30 hint-text"></p>Name</div>
+                                            <div class="row-value"><span class="row-index">1</span><span class="value">Doug Wong</span></div>
+                                            <div class="row-value"><span class="row-index">2</span><span class="value">Jeremy Wanger</span></div>
+                                            <div class="row-value"><span class="row-index">3</span><span class="value">Sam Dobbins</span></div>
+                                            <div class="row-value"><span class="row-index">4</span><span class="value">Jody Allquist</span></div>
+                                            <div class="row-value"><span class="row-index">5</span><span class="value">Amit Shah</span></div>
+                                            <div class="row-value" style="border-bottom: none"><span class="row-index">..</span><span class="value">+ 44 more</span></div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-5 show-data" style="padding-left: 0px;">
+                                            <div class="column"><h4 class="m-l-30"><strong>Column 2</strong></h4></div>
+                                            <div class="column-name p-l-30"><p class="m-l-30 hint-text"></p>Email</div>
+                                            <div class="row-value"><span class="row-index">1</span><span class="value">Doug Wong</span></div>
+                                            <div class="row-value"><span class="row-index">2</span><span class="value">Jeremy Wanger</span></div>
+                                            <div class="row-value"><span class="row-index">3</span><span class="value">Sam Dobbins</span></div>
+                                            <div class="row-value"><span class="row-index">4</span><span class="value">Jody Allquist</span></div>
+                                            <div class="row-value"><span class="row-index">5</span><span class="value">Amit Shah</span></div>
+                                            <div class="row-value" style="border-bottom: none"><span class="row-index">..</span><span class="value">+ 44 more</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

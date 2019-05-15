@@ -1,0 +1,154 @@
+<pg-container>
+    <div class="credit-section email-finder">
+        <div class="row">
+            <div class="col-lg-6 show-count">
+                <div class="separator"></div>
+                <div class="credit-count">
+                    <p class="credit-status">Free Credits</p>
+                    <h3 class="m-t-20"><strong>100</strong></h3>
+                </div>
+                <div class="credit-count">
+                    <p class="credit-status">My Credits</p>
+                    <h3 class="m-t-20"><strong>21655</strong></h3>
+                </div>
+                <div class="credit-count">
+                    <p class="credit-status">Total Usage</p>
+                    <h3 class="m-t-20"><strong>12500</strong></h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <button class="btn btn-tag btn-tag-light btn-tag-rounded buy-credit-btn">Buy Credits</button>
+            </div>
+        </div>
+        <div class="row m-t-50">
+            <div class="col-lg-8 offset-lg-2">
+                <h3>Find any professional emails within seconds</h3>
+            </div>
+        </div>
+        <div class="row m-t-30">
+            <div class="col-lg-8 offset-lg-2" style="display: inline-flex;">
+                <input type="text" placeholder="Satya P Nadella" class="form-control">
+                <div class="input-group-append input-group-prepend">
+                    <span class="input-group-text transparent"><i class="fa fa-at"></i>
+                    </span>
+                </div>
+                <input type="text" placeholder="microsoft.com" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-default" type="button"><i class="pg pg-search"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-30">
+            <div class="col-lg-8 offset-lg-2">
+                <p>Simply add Contact full name and Company domain<p>
+            </div>
+        </div>
+    </div>
+    <div class="text-section email-finder">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <p><strong>FIND EMAILS IN BULK</strong><p>
+            </div>
+        </div>
+    </div>
+    <div class="drag-drop-csv email-finder">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h3>Drag & Drop <strong>.CSV files</strong></h3>
+                <!-- <input type="file" class="hidden file-select" (change)="selectFile($event)"> -->
+                <a href="javascript:void(0)" (click)="drapDrop()" style="color: black;">or click here to upload</a>
+                <p class="hint-text m-t-20">Pleae include columns: First name, Last name and Website URL. Max: 2MB</p>
+            </div>
+        </div>
+    </div>
+</pg-container>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h3>Your file is <strong>Ready</strong></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-field">
+                        <div class="col-md-10 offset-md-1"><p>Verification status below</p></div>
+                    </div>
+                    <div class="row text-field m-t-15">
+                        <div class="col-md-10 offset-md-1"><p>Do you want to add all records to My Network?</p></div>
+                    </div>
+                    <div class="row checkbox-sectoni">
+                        <div class="col-md-7">
+                            <div class="checkbox check-success">
+                                <input checked="checked" id="checkbox_good" type="checkbox" value="1">
+                                <label for="checkbox_good">Good</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            317
+                        </div>
+                    </div>
+                    <div class="row checkbox-sectoni">
+                        <div class="col-md-7">
+                            <div class="checkbox check-success">
+                                <input checked="checked" id="checkbox_best_match" type="checkbox" value="1">
+                                <label for="checkbox_best_match">Best Match</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            79
+                        </div>
+                    </div>
+                    <div class="row checkbox-sectoni">
+                        <div class="col-md-7">
+                            <div class="checkbox check-success">
+                                <input id="checkbox_catch_all" type="checkbox" value="1">
+                                <label for="checkbox_catch_all">Catch All</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            91
+                        </div>
+                    </div>
+                    <div class="row checkbox-sectoni">
+                        <div class="col-md-7">
+                            <div class="checkbox check-success">
+                                <input id="checkbox_unknown" type="checkbox" value="1">
+                                <label for="checkbox_unknown">Unknown</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            29
+                        </div>
+                    </div>
+                    <div class="row checkbox-sectoni">
+                        <div class="col-md-7">
+                            <div class="checkbox check-success">
+                                <input id="checkbox_bad" type="checkbox" value="1">
+                                <label for="checkbox_bad">Bad</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            53
+                        </div>
+                    </div>
+                    <div class="row m-t-20">
+                        <div class="col-md-6">
+                            <button class="btn add-btn btn-sm  btn-rounded btn-primary">Add</button>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="margin-top: 3px;">Add to My Network</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default m-t-10 download-btn">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

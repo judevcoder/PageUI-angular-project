@@ -1,0 +1,248 @@
+<pg-container>
+    <div class="row">
+        <div class="col-lg-12 email-settings">
+            <div class="card card-transparent">
+                <pg-tabset tabAnimation="slide-left" Type="simple" ShowPagination="true">
+                    <pg-tab>
+                        <ng-template #TabHeading>
+                           Mailbox
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2 m-t-40">
+                                <button class="btn add-mailbox-btn" type="button" (click)="addMailbox()"><i class="pg pg-plus"></i>&nbsp;Add Mailbox</button>
+                            </div>
+                            <div class="col-lg-8 offset-lg-2 m-t-20 mailbox table-responsive">
+                                <table class="table mailbox-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sender Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Email Provider</th>
+                                            <th scope="col">Last Sync</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let mailbox of mailboxDataList">
+                                            <td>{{mailbox.senderName}}</td>
+                                            <td>{{mailbox.email}}</td>
+                                            <td>{{mailbox.provider}}</td>
+                                            <td>{{mailbox.lastSync}}</td>
+                                            <td>
+                                                <div class="dropdown pull-right d-lg-block d-none">
+                                                    <button class="profile-dropdown-toggle mailbox-table-action" type="button">
+                                                        <span><i class="fa fa-ellipsis-v"></i></span>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <a href="javascript:void(0)" class="dropdown-item"><i class="fs-13 fa fa-trash"></i> Remove</a>
+                                                        <a href="javascript:void(0)" class="dropdown-item"><i class="fs-13 fa fa-refresh"></i> Re-Sync</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </pg-tab>
+                    <pg-tab>
+                        <ng-template #TabHeading>
+                           Global Settings
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-lg-6 offset-lg-3 m-t-50">
+                                <div class="form-group">
+                                    <span class="help">unsubscribe text: Opt-out text at the bottom of your email. Please note: You can customize you text, however, the unsubscribe link will be inserted by default.</span>
+                                    <input type="text" class="form-control" placeholder="Want to opt-out? click here" [(ngModel)]="unsubscribeText">
+                                    <a href="javascript:void(0)"><span>{{(unsubscribeText? unsubscribeText: "Want to opt-out? click here")}}</span></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">unsubscribe land page text:</span>
+                                    <input type="text" class="form-control" placeholder="You've been unsubscribed from my list" [(ngModel)]="unsubscribeLangPageText">
+                                    <a href="javascript:void(0)"><span>{{(unsubscribeLangPageText? unsubscribeLangPageText: "You've been unsubscribed from my list")}}</span></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">Remove specific emails from sending: You can enter a full email address or a domain ending with @microsoft.com etc.</span>
+                                    <input type="email" class="form-control" placeholder="1 email/domain per line">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">BCC: Enter one or multiple emails that will be BCC'ed to all outgoing and incoming emails</span>
+                                    <input type="text" class="form-control" placeholder="1 email per line">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="checkbox check-primary checkbox-circle">
+                                    <input checked="checked" id="checkbox" type="checkbox" value="1">
+                                    <label for="checkbox">Do not forward bonuced and automated replies</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">Maximum emails to a contact per week</span>
+                                    <input type="number" class="form-control" placeholder="" min="0">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">Maximum emails to a contact per day</span>
+                                    <input type="number" class="form-control" placeholder="" min="0">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 offset-lg-3">
+                                <div class="form-group">
+                                    <span class="help">Setup your email signature: Enter you signature manaually or copy paste your existing signature to the text editor below.</span>
+                                    <quill-editor [style]="{height: '150px'}">
+                                        <div quill-editor-toolbar class="quill-editor-toolbar">
+                                            <span class="ql-formats">
+                                                <button class="ql-bold" [title]="'Bold'"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-italic" [title]="'Italic'"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-underline" [title]="'Underline'"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <select class="ql-background" [title]="'Background Color'">
+                                                    <option selected></option>
+                                                    <option value="red"></option>
+                                                    <option value="blue"></option>
+                                                    <option value="black"></option>
+                                                </select>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-link ql-active"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-image"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-code-block"></button>
+                                            </span>
+                                        </div>
+                                    </quill-editor>
+                                </div>
+                            </div>
+                        </div>
+                    </pg-tab>
+                    <pg-tab>
+                        <ng-template #TabHeading>
+                           DNS Setup
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6 offset-lg-3 m-t-50">
+                                    <h5>Use your own custom domain for tracking</h5>
+                                    <p>Track opens, clicks and unsubscribes with your own custom domain.</p>
+                                    <a href="javascript:void(0)">See how it works.</a>
+                                </div>
+                                <div class="col-lg-6 offset-lg-3 m-t-20">
+                                <div class="form-group">
+                                    <span class="warning-icon"><i class="fa fa-warning"></i></span>
+                                    <span class="help">Your domain for tacking clicks and opens</span>
+                                    <input type="text" class="form-control" placeholder="Enter your domain here">
+                                </div>
+                                <div class="form-group">
+                                    <span class="warning-icon warning-n-icon"><i class="fa fa-warning"></i></span>
+                                    <span class="help">Your domain for unsubscribe landing page</span>
+                                    <input type="text" class="form-control" placeholder="Enter your domain here">
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </pg-tab>
+                </pg-tabset>
+           </div>
+        </div>
+    </div>
+</pg-container>
+
+<div bsModal #addMailboxModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg mailbox-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <h3><span class="semi-bold">Connect a mail account</span></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5><span>How will you be sending emails?</span></h5>
+                        </div>
+                    </div>
+                    <div class="row email-sending-option m-t-20">
+                        <div class="email-option google-account">
+                            <a href="javascript:void(0)" (click)="selectEmailOption('google')"><img src="assets/img/google-account.png"></a>
+                        </div>
+                        <div class="m-l-20 email-option gmail-alias">
+                            <a href="javascript:void(0)" (click)="selectEmailOption('alias')"><img src="assets/img/gmail-alias.png"></a>
+                        </div>
+                    </div>
+                    <div class="row m-t-40">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary connect-btn" (click)="connectToMailAccount()" disabled>Next</button>
+                        </div>
+                        <div class="col-md-12 m-t-30">
+                            <button type="button" class="btn btn-default" (click)="addMailboxModal.hide()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #connectToMailModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg alias-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <h3><span class="semi-bold">Setup your alias</span></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5><span>Set up an alias account on Google from any email provider.</span></h5>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="alias-step">1</div>
+                            <div class="step-content m-l-20">
+                                <a href="javascript:void(0)"><span class="hint-text small">Google account</span></a>
+                                <p style="font-weight: 600;">jason@getprofiles.co</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 offset-md-3 m-t-25">
+                            <div class="alias-step">2</div>
+                            <div class="step-content m-l-20" style="padding: auto;">
+                                <span>In your Gmail settings, add your alias as shown in our video.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 offset-md-3 m-t-25">
+                            <div class="alias-step">3</div>
+                            <div class="step-content m-l-20">
+                                <input type="text" class="form-control" placeholder="Sending from name">
+                                <input type="email" class="form-control" placeholder="Alias email address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-40">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-danger" (click)="addAlias()">ADD THIS ALIAS</button>
+                        </div>
+                        <div class="col-md-12 m-t-30">
+                            <button type="button" class="btn btn-default" (click)="connectToMailModal.hide()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

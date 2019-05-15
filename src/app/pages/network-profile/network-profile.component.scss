@@ -1,0 +1,431 @@
+.timeline-container:not(.left) .timeline::before {
+    left: 0;
+    margin-left: 16px;
+}
+
+.timeline-container:not(.left) .timeline .timeline-point {
+	left: 0;
+	margin-left: 7px;
+}
+
+.timeline::before {
+	background: #dadcdd;
+}
+
+.timeline-container:not(.left) .timeline .timeline-content {
+    margin-left: 40px;
+    width: 100%;
+}
+
+.event-date {
+	position: absolute;
+    width: 100%;
+    left: 0;
+    top: 30px;
+}
+
+.timeline {
+	padding: 0;
+}
+
+.timeline-point {
+    width: 20px;
+    height: 14px;
+    background: #fff;
+    border: 1px solid #dadcdd;
+}
+
+.fa-long-arrow-left {
+	font-size: 30px;
+}
+
+.profile {
+    width: 100%;
+    height: 50px;
+}
+
+.profile-image {
+	float: left;
+
+	img {
+		border-radius: 50%;
+	}
+
+}
+
+.profile .profile-name {
+	float: left;
+	p {
+		font-size: 25px;
+    	font-family: -webkit-body;
+	}
+}
+
+.organize-dropdown-toggle {
+	border: 1px solid #007be8;
+	background: #f6f9fa;
+	span {
+		color: #007be8;
+	}
+}
+
+.organize-dropdown-toggle:hover {
+	background: #007be8;
+	span {
+		color: #fff;
+	}
+}
+
+.organize-btn {
+	float: right;
+}
+
+.profile-info {
+	margin-left: 75px;
+}
+
+.detail-info {
+	margin-left: 15px;
+}
+
+.fa-suitcase {
+	color: #5f9ea0;
+}
+
+.fa-map-marker {
+	color: #ec5273;
+}
+
+.pg-map {
+	color: #ec5273;	
+}
+
+.fa-building {
+	color: #fdbb55;
+}
+
+.fa-globe {
+    color: #6b94ec;
+}
+
+.fa-users {
+	color: #60d1ff;
+}
+
+.fa-flag {
+	color: #6596ed;
+}
+
+.fa-money {
+	color: #a1c6a4;
+}
+
+.pg-telephone {
+	color: #6495ed;
+}
+
+.email-status-primary {
+    color: #00e8ba;
+}
+
+.email-status-success {
+    color: #0064bc;
+}
+
+.email-status-danger {
+    color: red;
+}
+
+.profile-detail {
+	padding: 5px 0;
+	display: inline-flex;
+    width: 100%;
+
+    .margin-auto {
+    	margin: auto;
+    }
+
+    span {
+    	width: 16px;
+    }
+
+    .detail-info {
+    	width: 100%;
+    }
+
+    .form-control[disabled] {
+    	background: #f6f9fa;
+    	border: none;
+    	color: #7a8994;
+    }
+
+    .form-control {
+    	background: #f6f9fa;
+    	border-top: none;
+    	border-left: none;
+    	border-right: none;
+    	color: #7a8994;
+    }
+}
+
+.other-profile {
+	height: 40px;
+	margin-top: 10px;
+	a {
+	    padding: 0 3px;
+	}
+}
+
+.social-icon {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    background: #fff;
+    color: #007bb6;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #007bb6;
+}
+
+.company-relation {
+	margin-top: 50px;
+    width: 75%;
+    height: 100px;
+    border: 1px solid #e3e5e7 !important;
+    margin-left: 100px;
+    border-radius: 5px;
+}
+
+.company-logo {
+	width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+
+ul.contact-company {
+	display: inline-flex;
+	padding: 0;
+}
+
+ul.contact-company > li {
+	list-style-type: none;
+	padding: 0 5px;
+}
+
+ul.contact-company > li img {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	border: 1px solid #fff;
+}
+
+.card-avtivity {
+	padding: 0 100px;
+}
+
+.card-avtivity .tab-wrapper .nav-tabs-simple .active-bar {
+	background-color: black !important;
+}
+
+.card-description {
+	display: inline-flex;
+}
+
+.action-user {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #949494;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.action {
+	margin-top: 5px;
+}
+
+.m-l-10 span {
+	font-size: 12px;
+}
+
+.action span i {
+	font-size: 32px;
+}
+
+.filter-activity {
+    width: 150px;
+    position: relative;
+    float: right;
+    z-index: 45;
+}
+
+.organize-dropdown {
+    width: 118px;
+}
+
+.notes-header {
+	display: inline-flex;
+	margin-left: 30px;
+	margin-top: 10px;
+
+	p {
+		font-weight: 700;
+		color: #000;
+    	margin: auto;
+    	margin-left: 0;
+	}
+
+	a {
+		margin: auto;
+    	margin-right: 30px;
+    	text-decoration: underline;
+	}
+}
+
+.notes-body {
+    padding: 0 30px;
+    margin-top: 10px;
+
+    .notes-block {
+		.notes-text {
+			display: inline-flex;
+			width: 100%;
+			p {
+				color: #000;
+			}
+
+			a {
+				margin-left: 20px;
+			}
+		}
+
+		.notes-date {
+			display: inline-flex;
+			width: 100%;
+			a {
+			    margin: auto;
+				margin-right: 0;
+			}
+		}
+    }
+
+}
+
+.notes-modal {
+	textarea {
+		width: 100%;
+		height: 100px;
+	}
+}
+
+.add-tags {
+	display: inline-flex;
+
+	.input-group-prepend {
+		height: 35px;
+	}
+
+	.typehead {
+		width: 100%;
+
+		.dropdown-menu > .dropdown-item {
+			color: #000000 !important;
+		}
+
+		.dropdown-item.active, .dropdown-item:active {
+			background-color: #007bff !important;
+			color: #ffffff !important;
+		}
+	}
+}
+
+.Tag-modal {
+	.modal-body {
+		height: 250px;
+		border-bottom: 1px solid #dddddd;
+	}
+
+	.modal-footer {
+		margin-top: 25px;
+	}
+}
+
+.ele-tag {
+	padding: 0 5px;
+	height: 22px;
+	border: 1px solid;
+	width: fit-content;
+    border-radius: 5px;
+    float: left;
+    margin: 3px 3px;
+}
+
+.tags {
+    padding-bottom: 20px;
+
+    .notes-header .tag-title {
+    	font-weight: 700;
+    	color: #000;
+    }
+}
+
+.tag-body {
+	margin-top: 20px !important;
+}
+
+.show-hide {
+	position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.copy-email-tooltip {
+  	position: relative;
+  	display: inline-block;
+  	margin-top: 8px;
+  	cursor: pointer;
+}
+
+.copy-email-tooltip .tooltiptext {
+  	visibility: hidden;
+  	width: 140px;
+  	background-color: #555;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px;
+  	position: absolute;
+  	z-index: 1;
+  	bottom: 150%;
+  	left: 50%;
+  	margin-left: -75px;
+  	opacity: 0;
+  	transition: opacity 0.3s;
+}
+
+.copy-email-tooltip .tooltiptext::after {
+  	content: "";
+  	position: absolute;
+  	top: 100%;
+  	left: 50%;
+  	margin-left: -5px;
+  	border-width: 5px;
+  	border-style: solid;
+  	border-color: #555 transparent transparent transparent;
+}
+
+.copy-email-tooltip:hover .tooltiptext {
+  	visibility: visible !important;
+  	opacity: 1 !important;
+}
+
+.note-dropdown {
+	.dropdown-menu {
+		display: none;
+	    top: 20px;
+	}
+}
+
+.note-dropdown:hover .dropdown-menu{
+	display: block;
+}

@@ -1,0 +1,178 @@
+<ng-container *ngIf="!campaignExist; else show_campaign">
+	<pg-container>
+		<div class="card card-transparent">
+			<div class="card-body campaign-setup">
+				<div class="row">
+					<div class="col-lg-4 offset-lg-4">
+						<span class="paper-plane"><i class="fa fa-paper-plane-o"></i></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2">
+						<h4>Create and launch your first campaign</h4>
+					</div>
+				</div>
+				<div class="row m-t-10">
+					<div class="col-lg-4 offset-lg-4">
+						<button class="btn btn-cons" (click)="goToCampaignSetup()"><i class="fa fa-plus-circle" style="color: #0064bc;"></i> New Campaign
+	            		</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</pg-container>
+</ng-container>
+
+<ng-template #show_campaign>
+    <pg-container>
+        <div class="card card-transparent">
+            <div class="card-header ">
+                <div class="pull-right">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary btn-cons" (click)="goToCampaignSetup()"><i class="fa fa-plus-circle"></i> New Campaign
+                        </button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </pg-container>
+	<pg-container extraHorizontalClass="bg-white" extraClass="bg-white">
+	    <div class="card card-transparent campaign-table">
+	        <div class="card-header ">
+                <div class="clearfix"></div>
+	        	<div class="pull-right">
+		          	<div class="col-xs-12">
+		            	<input type="text" class="form-control pull-right" placeholder="Search" (keyup)='updateFilter($event)' id="filter">
+		          	</div>
+		        </div>
+	          	<div class="clearfix"></div>
+	        </div>
+	        <div class="card-body">
+	            <div class="table table-responsive">
+		            <ngx-datatable
+						#table
+						class='table table-hover'
+						[columns]="columnsDynamic"
+						[columnMode]="columnModeSetting"
+						[scrollbarH]="scrollBarHorizontal"
+						[headerHeight]="50"
+						[footerHeight]="50"
+						[rowHeight]="'auto'"
+						[limit]="5"
+						[rows]='campaignRows'>
+						<ng-template 
+							ngx-datatable-footer-template 
+							let-rowCount="rowCount"
+							let-pageSize="pageSize"
+							let-selectedCount="selectedCount"
+							let-curPage="curPage"
+							let-offset="offset">
+							Showing {{curPage}} to {{pageSize}} of {{rowCount}} entries
+						</ng-template>
+						<ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="Status">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                status
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                <ng-container *ngIf="value == 'true'; else disabled_switch">
+	                      			<pg-switch [ngModel]="true" [Size]="'small'" [Color]="'lime'" [ngModel]="true"></pg-switch>
+	                      		</ng-container>
+	                      		<ng-template #disabled_switch>
+	                      			<pg-switch [ngModel]="false" [Size]="'small'" [Color]="'lime'" [ngModel]="false"></pg-switch>
+	                      		</ng-template>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="campaignName">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                Campaign Name
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                <a href="/emailer/campaign/detail/{{rowIndex + 1}}">{{value}}</a>
+                      		</ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="leads">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                leads
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                {{value}}
+                      		</ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="delivered">
+                            <ng-template ngx-datatable-header-template let-value="leads">
+                                delivered
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                {{value}}
+                      		</ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="opens">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                opens
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                {{value}}
+                      		</ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="replies">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                replies
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                {{value}}
+                      		</ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false" name="id">
+                            <ng-template ngx-datatable-header-template let-value="value">
+                                
+                            </ng-template>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                                <div class="btn-group" id="action_{{value}}">
+	                            	<button type="button" class="btn btn-success" (click)="editCampaign(value)"><i class="fa fa-pencil"></i>
+	                            	</button>
+	                                <button type="button" class="btn btn-success"><i class="fa fa-copy"></i>
+	                                </button>
+	                                <button type="button" class="btn btn-success" (click)="showDeleteCampaignConfirmModal(value)"><i class="fa fa-trash-o"></i>
+	                                </button>
+	                            </div>
+                      		</ng-template>
+                        </ngx-datatable-column>
+		            </ngx-datatable>
+	            </div>
+	        </div>
+	    </div>
+	</pg-container>
+</ng-template>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-md delete-campaign-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    	<div class="col-md-12" style="text-align: center;">
+                    		<span><i class="fa fa-times-circle-o" style="font-size: 65px; color: #be2444;"></i></span>
+                    	</div>
+                        <div class="col-md-12" style="text-align: center;">
+                            <h3><span class="semi-bold">Are you sure?</span></h3>
+                        </div>
+                        <div class="col-md-12" style="text-align: center;">
+                            <p>Do you really want to delete this campaign? This process cannot be undone</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2 m-t-10 sm-m-t-10">
+                            <button type="button" class="btn btn-danger m-t-5 pull-right" (click)="deleteCampaign()">Delete</button>
+                            <button type="button" class="btn btn-default m-t-5 pull-left" (click)="mdSlideUp.hide()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

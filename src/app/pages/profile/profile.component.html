@@ -1,0 +1,119 @@
+<pg-container>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-transparent">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="row profile-box">
+                        <div class="col-lg-4">
+                            <div class="upload-profile-image">
+                                <div class="update-user-avatar" (click)="uploadImage()"><span><i class="fa fa-pencil"></i></span></div>
+                                <input type='file' (change)="readUrl($event)" id="upload_image" style="display: none;">
+                                <img [src]="(url ? url: '/assets/img/user-avatar-placeholder.png')" class="image--cover">
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-12 m-t-25">
+                                    <button class="btn btn-primary profile-edit-btn" (click)="updateProfileData()">{{(disabled? 'Edit': 'Save')}}</button>
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12 account-profile-info">
+                                    <span class="fa-icon"><i class="fa fa-user"></i></span>
+                                    <input type="text" placeholder="Name" class="form-control" id="profile_name" disabled="{{disabled}}" [ngModel]="profileName">
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12">
+                                    <span class="fa-icon"><i class="fa fa-at"></i></span>
+                                    <span class="m-l-15">email</span>
+                                    <span class="m-l-20" style="font-weight: 600;">gary.egan@oracle.com</span>
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12">
+                                    <span class="fa-icon"><i class="fa fa-map-marker"></i></span>
+                                    <span class="m-l-15" style="font-size: 16px; color: #000;">Bethlehem, United States</span>
+                                    <span class="fa-icon m-l-15"><i class="fa fa-clock-o"></i></span>
+                                    <span class="m-l-15" style="font-size: 16px; color: #000;">4:09 PM</span>
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12 account-profile-info">
+                                    <span class="fa-icon"><i class="fa fa-briefcase"></i></span>
+                                    <input type="text" placeholder="No job title yet" class="form-control" disabled="{{disabled}}" id="job_title" [ngModel]="jobTitle">
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12 account-profile-info">
+                                    <span class="fa-icon"><i class="fa fa-twitter"></i></span>
+                                    <input type="text" placeholder="Add your Twitter" class="form-control" disabled="{{disabled}}" id="twitter_link" [ngModel]="twitterLink">
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12 account-profile-info">
+                                    <span class="fa-icon"><i class="fa fa-linkedin"></i></span>
+                                    <input type="text" placeholder="Add your Linkedin" class="form-control" disabled="{{disabled}}" id="twitter_link" [ngModel]="linkedinLink">
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12">
+                                    <span class="fa-icon"><i class="fa fa-calendar"></i></span>
+                                    <span class="m-l-15">Created at </span>
+                                    <span class="m-l-30" style="font-size: 16px; color: #000;">5 months ago</span>
+                                </div>
+                            </div>
+                            <div class="row m-t-20">
+                                <div class="col-lg-12" style="display: inline-flex;">
+                                    <div class="free-plane">
+                                        <span class="fa-icon" style="color: #fff; font-size: 12px;"><i class="fa fa-quote-left"></i></span>    
+                                    </div>
+                                    <span class="m-l-15">Free Plan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn change-password" (click)="changePassword()">Change Password</button>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+</pg-container>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Change your password</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Password Confirmation</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn pull-right" style="float: right;" (click)="cancelPasswordChange()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="saveNewPassword()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

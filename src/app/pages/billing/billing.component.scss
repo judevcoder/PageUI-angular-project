@@ -1,0 +1,110 @@
+.plan-btn {
+	border: 1px solid #0062cc;
+}
+
+.plan-toogle {
+	display: inline-flex;
+}
+
+.currency-btn {
+	margin-left: auto;
+}
+
+.plan-details {
+	list-style: none;
+	padding-right: 20px;
+}
+
+.details-box {
+	display: inline-flex;
+	width: 100%;
+}
+
+.plan-price {
+	margin-left: auto;
+    font-size: 25px;
+    color: #7160B0;
+    margin-top: 15px;
+}
+
+.text-plan-details {
+	color: #5DA3D1;
+	opacity: 0.9;
+}
+
+.plan-title {
+    color: #4A98CC;
+    font-family: -webkit-body;
+    font-weight: 600;
+}
+
+ul.plan-details > li {
+    padding: 15px 0;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.plan-previous-btn {
+    border-color: rgba(122, 137, 148, 0.27);
+}
+
+.coupon {
+    margin-left: auto;
+    width: 40%;
+    height: 50px;
+    text-align: center;
+    border: 2px solid #d0d0d0;
+    margin-right: 20px;
+
+    span {
+	    font-size: 10px;
+    	font-weight: 600;
+    	color: #6B6B6B;
+    }
+
+    input {
+	    background: #f6f9fa;
+    	border: none;
+    	width: 100%;
+    }
+}
+
+.billing-invoice {
+	input {
+		background: #f6f9fa;
+		border: none;
+	}
+
+	a {
+		color: #7a8994;
+	}
+
+	span {
+		color: #7a8994;
+	    font-weight: 600;
+	}
+}
+
+.download-invoice {
+	color: #000 !important;
+}
+
+.paid-status {
+	color: #37a000;
+}
+
+.invoice-history-table {
+	thead tr th {
+		color: #7a8994;
+    	font-weight: 600;
+	}
+
+	tbody tr td {
+		color: #000;
+		background: none;
+	}
+}
+
+.invoice-amount {
+    color: #000 !important;
+    font-weight: 100 !important;
+}

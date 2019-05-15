@@ -1,0 +1,240 @@
+<!-- START CONTAINER FLUID -->
+<div class="container-fluid p-l-25 p-r-25 p-t-0 p-b-25 sm-padding-10 sm-gutter">
+    <!-- START ROW -->
+    <div class="row chart-panel">
+        <div class="col-md-6 col-sm-12  d-flex flex-column">
+            <div class="box-border">
+                <div class="m-t-30"></div>
+                <form [formGroup]="myForm" class="form-inline m-r-35" style="float: right;">
+                    <div class="btn-group btn-group-toggle" btnRadioGroup formControlName="radio">
+                        <label btnRadio="A" class="btn btn-outline-primary" (click)="showChart()"><i class="fa fa-bar-chart" aria-hidden="true"></i></label>
+                        <label btnRadio="B" class="btn btn-outline-primary" (click)="showTable()"><i class="fa fa fa-table" aria-hidden="true"></i></label>
+                    </div>
+                </form>
+                <div class="m-t-50"></div>
+                <div class="data-analysis">
+                    <div class="sm-no-padding chart-section" [ngClass]="{'p-r-30': !fixChart}">
+                        <div class="line-chart text-center p-t-20" data-x-grid="false">
+                            <nvd3 [options]="options" [data]="data"></nvd3>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="data">
+                        <div class="stats-table hidden" [ngClass]="{'p-r-30': !fixChart}">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" *ngFor="let data of tableData">{{data.statusName}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td *ngFor="let data of tableData">{{data.statusCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12  d-flex flex-column">
+            <!-- START ITEM -->
+            <div class="box-border">
+                <div class="card card-transparent">
+                    <div class="card-header separator">
+                        <div class="card-title">
+                            <h5>
+                                <span class="semi-bold">Recent Activities</span>
+                            </h5>
+                        </div>
+                        <div class="card-controls">
+                            <ul>
+                                <li>
+                                    <div class="dropdown">
+                                        <a id="card-settings" data-target="#" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                        <i class="card-icon card-icon-settings "></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="card-settings">
+                                            <a href="javascript:voide(0);" class="dropdown-item">API</a>
+                                            <a href="javascript:voide(0);" class="dropdown-item">Preferences</a>
+                                            <a href="javascript:voide(0);" class="dropdown-item">About</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body m-t-50">
+                        <div class="timeline-container top-circle recent-activities scrollable">
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point success">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">4 days</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Connection requested with <a href="javascript:void(0)">Jomar Lumbis</a> Sales Dev manager, B2B Lead
+                                                    Gen Specialist, Project Manager Founder of Goremote Business Solutions - goremoteph.com 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Deleted campaign paused </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>A new connection campaign launched</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point success">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Deleted <a href="javascript:void(0)">Campaign</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Account resumed</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point success">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">4 days</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Connection requested with <a href="javascript:void(0)">Jomar Lumbis</a> Sales Dev manager, B2B Lead
+                                                    Gen Specialist, Project Manager Founder of Goremote Business Solutions - goremoteph.com 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Deleted campaign paused </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>A new connection campaign launched</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point success">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Deleted <a href="javascript:void(0)">Campaign</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="timeline">
+                                <div class="timeline-block">
+                                    <div class="timeline-point danger">
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="event-date">
+                                            <span class="font-montserrat all-caps hint-text m-t-0">2 wks</span>
+                                        </div>
+                                        <div class="card social-card share full-width">
+                                            <div class="card-description">
+                                                <p>Account resumed</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER FLUID -->

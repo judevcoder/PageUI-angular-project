@@ -1,0 +1,470 @@
+<div class="container" *ngIf="_boxed; else basicLayoutBlock">
+    <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</div>
+<ng-template #basicLayoutBlock>
+    <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</ng-template>
+<ng-template #contentTpl>
+    <pg-sidebar>
+        <ng-template #sideBarOverlay>
+            <div class="row">
+                <div class="col-xs-6 no-padding">
+                    <a href="javascript:void(0)" class="p-l-40"><img src="assets/img/demo/social_app.svg" alt="socail">
+                    </a>
+                </div>
+                <div class="col-xs-6 no-padding">
+                    <a href="javascript:void(0)" class="p-l-10"><img src="assets/img/demo/email_app.svg" alt="socail">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 m-t-20 no-padding">
+                    <a href="javascript:void(0)" class="p-l-40"><img src="assets/img/demo/calendar_app.svg" alt="socail">
+                    </a>
+                </div>
+                <div class="col-xs-6 m-t-20 no-padding">
+                    <a href="javascript:void(0)" class="p-l-10"><img src="assets/img/demo/add_more.svg" alt="socail">
+                    </a>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #sideBarHeader>
+            <img src="assets/img/logo_blue.png" pgRetina src2x="assets/img/logo_blue_2x.png" alt="logo" class="brand"
+                width="78" height="22">
+        </ng-template>
+        <ng-template #menuItems>
+            <pg-menu-items [Items]="menuLinks">
+            </pg-menu-items>
+        </ng-template>
+    </pg-sidebar>
+
+    <page-container>
+        <pg-header [boxed]="_boxed">
+            <a href="javascript:void(0);" class="btn-link toggle-sidebar d-lg-none pg pg-menu"
+                (click)="toggleMobileSidebar()"></a>
+            <div class="d-flex align-items-center" [class.no-brand]="_layoutOption === 'email'">
+                <a href="javascript:void(0);" class="toggle-secondary-sidebar" (click)="toggleSecondarySideBar()"
+                *ngIf="_layoutOption === 'email'">Inbox <span class="text-info">(12)</span> <span class="caret"></span></a>
+                <div class="brand" [class.d-none]="_layoutOption === 'email'" [class.d-xl-block]="_layoutOption === 'email'"
+                [class.d-lg-block]="_layoutOption === 'email'">
+                <img src="assets/img/logo_blue.png" alt="logo" pgRetina src1x="assets/img/logo_blue.png"
+                    src2x="assets/img/logo_blue_2x.png" width="78" height="22">
+            </div>
+            <span class="cursor-pointer">
+                <pg-menu-icon [IconType]="'fi'" [IconName]="'align-left'" [ExtraClass]="'nodeColor'"></pg-menu-icon>
+            </span>
+            <div class="navbar-search-filter">
+                <div class="input-group-prepend">
+                    <span class="input-group-text transparent"><i class="pg pg-search"></i></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Search" id="search-keyword" name="search-keyword">
+            </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <ul class="d-lg-inline-block d-none notification-list no-margin b-grey b-r no-style p-l-30 p-r-20">
+                    <li class="p-r-10 inline">
+                        <div class="dropdown" dropdown>
+                            <a href="javascript:void(0)" id="notification-center" class="header-icon fa fa-bell" (click)="toogleNotification()">
+                                <span class="bubble"></span>
+                            </a>
+                            <div class="dropdown-menu notification-toggle notification-popup">
+                                <div class="notification-panel">
+                                    <a data-toggle="refresh" class="portlet-refresh text-black pull-right top-refresh-icon" href="javascript:void(0)">
+                                        <i class="pg pg-refresh_new"></i>
+                                    </a>
+                                    <pg-tabset tabAnimation="slide-left" Type="simple" ShowPagination="true">
+                                        <pg-tab>
+                                            <ng-template #TabHeading>
+                                                eMailer
+                                            </ng-template>
+                                            <div class="row">
+                                                <div class="notification-body scrollable">
+                                                    <div class="notification-item unread clearfix">
+                                                        <div class="heading open">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/1x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/1.jpg" alt="" src="assets/img/profiles/1.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                                <span class="bold">Karen Druid</span>
+                                                                <span class="fs-12 m-l-10">New Position</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">few sec ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option unread-status" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/3x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/3.jpg" alt="" src="assets/img/profiles/3.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Lisa Banter</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">5 mins ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                            <i class="pg pg-mail m-r-10"></i>
+                                                            <span class="bold">Your list is ready</span>
+                                                            <span class="fs-12 m-l-10">Email Finder</span>
+                                                            </a>
+                                                            <span class="pull-right time">20 mins ago</span>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/4x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/4.jpg" alt="" src="assets/img/profiles/4.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Sean Kasper</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <span class="pull-right time">50 mins ago</span>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/2x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/2.jpg" alt="" src="assets/img/profiles/2.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                                <span class="bold">John Baker</span>
+                                                                <span class="fs-12 m-l-10">New Position</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">1 hour ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/4x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/4.jpg" alt="" src="assets/img/profiles/4.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Sean Kasper</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">3 hours ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="notification-footer text-center">
+                                                    <a href="/account/notification" class="">Read all notifications</a>
+                                                    <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="javascript:void(0)">
+                                                        <i class="pg pg-refresh_new"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </pg-tab>
+                                        <pg-tab>
+                                            <ng-template #TabHeading>
+                                                Prospector
+                                            </ng-template>
+                                            <div class="row">
+                                                <div class="notification-body scrollable">
+                                                    <div class="notification-item unread clearfix">
+                                                        <div class="heading open">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/1x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/1.jpg" alt="" src="assets/img/profiles/1.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                                <span class="bold">Karen Druid</span>
+                                                                <span class="fs-12 m-l-10">New Position</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">few sec ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option unread-status" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/3x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/3.jpg" alt="" src="assets/img/profiles/3.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Lisa Banter</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">5 mins ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                            <i class="pg pg-mail m-r-10"></i>
+                                                            <span class="bold">Your list is ready</span>
+                                                            <span class="fs-12 m-l-10">Email Finder</span>
+                                                            </a>
+                                                            <span class="pull-right time">20 mins ago</span>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/4x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/4.jpg" alt="" src="assets/img/profiles/4.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Sean Kasper</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <span class="pull-right time">50 mins ago</span>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/2x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/2.jpg" alt="" src="assets/img/profiles/2.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-color-f pull-left">
+                                                                <span class="bold">John Baker</span>
+                                                                <span class="fs-12 m-l-10">New Position</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">1 hour ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="notification-item  clearfix">
+                                                        <div class="heading">
+                                                            <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
+                                                                <img width="30" height="30" src2x="assets/img/profiles/4x.jpg" pgRetina
+                                                                    src1x="assets/img/profiles/4.jpg" alt="" src="assets/img/profiles/4.jpg">
+                                                            </div>
+                                                            <a href="javascript:void(0)" class="text-danger pull-left">
+                                                            <i class="fa fa-exclamation-triangle m-r-10"></i>
+                                                            <span class="bold">Sean Kasper</span>
+                                                            <span class="fs-12 m-l-10">New Company</span>
+                                                            </a>
+                                                            <div class="pull-right">
+                                                                <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details" (click)="viewNotification($event)">
+                                                                    <div><i class="fa fa-angle-left"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <span class=" time">3 hours ago</span>
+                                                            </div>
+                                                            <div class="more-details">
+                                                                <div class="more-details-inner">
+                                                                    <h5 class="semi-bold fs-16">“Started new position as Head of Global <br>
+                                                                        Sales at SalesForce."<br>
+                                                                    </h5>
+                                                                    <p class="small hint-text">
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="option">
+                                                            <a href="javascript:void(0)" class="mark"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="notification-footer text-center">
+                                                    <a href="/account/notification" class="">Read all notifications</a>
+                                                    <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="javascript:void(0)">
+                                                        <i class="pg pg-refresh_new"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </pg-tab>
+                                    </pg-tabset>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="dropdown pull-right d-lg-block d-none" dropdown>
+                    <button class="profile-dropdown-toggle" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+                        <span class="thumbnail-wrapper d32 circular inline">
+                        <img src="assets/img/profiles/avatar.jpg" alt="" pgRetina src1x="assets/img/profiles/avatar.jpg"
+                            src2x="assets/img/profiles/avatar_small2x.jpg" width="32" height="32">
+                        </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" *dropdownMenu role="menu">
+                        <a href="/account/settings" class="dropdown-item"><i class="fs-13 pg pg-settings_small"></i> Settings</a>
+                        <a href="/account/billing" class="dropdown-item"><i class="fs-13 fa fa-credit-card"></i> Billing</a>
+                        <a href="javascript:void(0)" class="dropdown-item"><i class="fs-13 fa fa-question-circle"></i> Help</a>
+                        <a href="logout" class="clearfix bg-master-lighter dropdown-item">
+                        <span class="pull-left">Logout</span>
+                        <span class="pull-right"><i class="fs-13 pg pg-power"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </pg-header>
+        <div class="page-content-wrapper {{_pageContainerClass}}">
+            <div class="content {{_contentClass}}">
+                <router-outlet></router-outlet>
+            </div>
+            <ng-template [ngIf]="false">
+                <div class=" container-fluid container-fixed-lg footer">
+                    <div class="copyright sm-text-center">
+                        <p class="small no-margin pull-left sm-pull-reset">
+                            <span class="hint-text">Copyright &copy; 2017</span>&nbsp;<span class="font-montserrat">REVOX</span>.
+                            <span class="hint-text">All rights
+                            reserved.</span> <span class="sm-block"><a class="m-l-10 m-r-10"
+                                href="javascript:void(0)">Terms of use</a> <span
+                                class="muted">|</span> <a class=
+                                "m-l-10" href="javascript:void(0)">Privacy Policy</a></span>
+                        </p>
+                        <p class="small no-margin pull-right sm-pull-reset">
+                            Hand-crafted <span class="hint-text">&amp; made with Love</span>
+                        </p>
+                        <div class="clearfix">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </page-container>
+    <app-search-overlay></app-search-overlay>
+    <app-quickview></app-quickview>
+</ng-template>

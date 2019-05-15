@@ -1,0 +1,378 @@
+<pg-container>
+  	<pg-breadcrumb>
+    	<ol class="breadcrumb">
+      		<li class="breadcrumb-item active p-l-30">
+      			<a href="/prospector/network"><span><i class="fa fa-long-arrow-left"></i></span></a>
+      		</li>
+    	</ol>
+  	</pg-breadcrumb>
+</pg-container>
+
+<pg-container>
+	<div class="card card-transparent">
+		<div class="m-0 row card-body">
+			<div class="col-lg-6">
+				<div class="profile">
+					<div class="profile-image">
+						<img alt="" height="40" pgretina="" src="{{ profileData.image }}">
+					</div>
+					<div class="profile-name m-l-30">
+						<p class="hint-text m-t-10">{{ profileData.contactDetails.name }}</p>
+					</div>
+					<div class="organize-btn dropdown pull-right" dropdown>
+						<button type="button" class="btn btn-block btn-default organize-dropdown-toggle" dropdownToggle id="organizeDropdown">
+	                      	<span class="pull-left"><i class="pg pg-menu"></i></span>
+	                      	<span class="m-l-10">Organize</span>
+                    	</button>
+                    	<div class="dropdown-menu dropdown-menu-right organize-dropdown" *dropdownMenu role="menu">
+						    <a href="javascript:void(0)" class="dropdown-item" (click)="editableProfileInfo()">{{(disabled? 'Edit': 'Save')}}</a>
+						    <a href="javascript:void(0)" class="dropdown-item" (click)="showAddNotesModal()">Add Notes</a>
+						    <a href="javascript:void(0)" class="dropdown-item" (click)="showAddTagModal()">Add Tag</a>
+						    <a href="javascript:void(0)" class="dropdown-item">Archive</a>
+					  	</div>
+					</div>
+				</div>
+				<div class="profile-info">
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-suitcase detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.contactDetails.role" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-role" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-map-marker detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.city" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-city" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-building detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.name" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-name" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-phone detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.phone" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-phone" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="pg pg-map detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.address" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span><i class="fa fa-globe detail-icon"></i></span>
+						<a href="{{profileData.companyDetails.link}}"><span class="hint-text detail-info">{{ profileData.companyDetails.link }}</span></a>
+					</div>
+					<div class="profile-detail other-profile m-l-5">
+						<span style="margin-top: 11px;">
+							<a href="mailto: {{ profileData.businessEmail.email }}" style="height: 15px;">
+                                <span class="pg pg-mail detail-icon email-status-{{ profileData.businessEmail.status }}"></span>
+                            </a>
+						</span>
+						<input placeholder="Role" [(ngModel)]="profileData.businessEmail.email" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}" style="width: 35%">
+						<div class="copy-email-tooltip" (click)="copyEmail(profileData.businessEmail.email)" (mouseover)="initialText()">
+							<span class="copy-icon"><i class="fa fa-copy detail-icon"></i></span>
+							<span class="tooltiptext" id="myTooltip">Copy Email</span>
+						</div>
+					</div>
+					<div class="profile-detail other-profile">
+						<a href="javascript:void(0)"><span class="social-icon" style="font-weight: bold;">cb</span><span>&nbsp;</span></a>
+						<a href="javascript:void(0)" *ngIf="profileData.contactDetails.linkedSocial.linkedin == 'true'"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                        <a href="javascript:void(0)" *ngIf="profileData.contactDetails.linkedSocial.twitter == 'true'"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                        <a href="javascript:void(0)" *ngIf="profileData.contactDetails.linkedSocial.facebook == 'true'"><span class="social-icon fa fa-facebook"></span></a>
+                    </div>
+				</div>
+				<div class="reset-profile m-t-30">
+					<a href="javascript:void(0)">reset profile</a>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card card-transparent company-relation">
+					<p class="m-l-30 m-t-10">5 compaines presently working at</p>
+					<div class="m-l-20">
+						<ul class="contact-company">
+							<li><img class="company-logo" src="/assets/img/company/Apple.png"></li>
+							<li><img class="company-logo" src="/assets/img/company/fly.png"></li>
+							<li><img class="company-logo" src="/assets/img/company/images.png"></li>
+							<li><img class="company-logo" src="/assets/img/company/nexus.png"></li>
+							<li><img class="company-logo" src="/assets/img/company/solarenergy.png"></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card card-transparent company-relation">
+					<p class="m-l-30 m-t-10">1 other contacts found at this company</p>
+					<div class="m-l-20">
+						<ul class="contact-company">
+							<li><img class="company-logo" src="/assets/img/profiles/2x.jpg"></li>
+						</ul>
+					</div>
+					<a href="javascript:void(0)"><p style="float: right; margin-top: 3px;">Search other contacts from this company</p></a>
+				</div>
+
+				<div class="card card-transparent company-relation notes" style="height: auto;" *ngIf="notesList.length > 0">
+					<div class="notes-header">
+						<p>Notes</p>
+						<a href="javascript:void(0)" (click)="showAddNotesModal()">+ Add</a>
+					</div>
+					<div class="notes-body">
+						<div class="notes-block" *ngIf="showMore; else show_notes">
+							<div class="notes-text">
+								<p class="small">{{notesList[0].content}}</p>
+								<div class="dropdown pull-right d-lg-block d-none note-dropdown" dropdown style="margin-left: 20px;">
+				                    <button class="profile-dropdown-toggle" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+				                        <span><i class="fa fa-ellipsis-h"></i></span>
+				                    </button>
+				                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" style="right: -10px !important; width: 110px;">
+				                        <a href="javascript:void(0)" class="dropdown-item" (click)="editNote(i)">Edit</a>
+				                        <a href="javascript:void(0)" class="dropdown-item" (click)="deleteNote(i)">Delete</a>
+				                    </div>
+				                </div>
+							</div>
+							<div class="notes-date">
+								<p class="small">{{notesList[0].createdAt | date: 'MMM d, y'}}</p>
+							</div>
+						</div>
+						<ng-template #show_notes>
+							<div class="notes-block more-note-block" *ngFor="let note of notesList; let i = index">
+								<div class="notes-text">
+									<p class="small">{{note.content}}</p>
+									<div class="dropdown pull-right d-lg-block d-none note-dropdown" dropdown style="margin-left: 20px;">
+					                    <button class="profile-dropdown-toggle" type="button" dropdownToggle id="profileDropdown" style="cursor: pointer;">
+					                        <span><i class="fa fa-ellipsis-h"></i></span>
+					                    </button>
+					                    <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu" style="right: -10px !important; width: 110px;">
+					                        <a href="javascript:void(0)" class="dropdown-item" (click)="editNote(i)">Edit</a>
+					                        <a href="javascript:void(0)" class="dropdown-item" (click)="deleteNote(i)">Delete</a>
+					                    </div>
+					                </div>
+								</div>
+								<div class="notes-date">
+									<p class="small">{{note.createdAt | date: 'MMM d, y'}}</p>
+								</div>
+							</div>
+						</ng-template>
+					</div>
+					<div class="show-hide">
+						<a href="javascript:void(0)" class="small" *ngIf="showMore" (click)="showAllNotes()">Show more</a>
+						<a href="javascript:void(0)" class="small" *ngIf="hideNote" (click)="hideNotes()">hide</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="m-0 row card-body">
+			<div class="col-lg-6">
+				<div class="profile">
+					<div class="profile-image">
+						<img alt="" height="40" pgretina="" src="{{ profileData.companyDetails.image }}">
+					</div>
+					<div class="profile-name m-l-30">
+						<p class="hint-text m-t-10">{{ profileData.companyDetails.name }}</p>
+					</div>
+				</div>
+				<div class="profile-info">
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-globe detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.link" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="pg pg-map detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.address" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-phone detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.phone" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="pg pg-telephone detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.telephone" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span class="margin-auto"><i class="fa fa-building detail-icon"></i></span>
+						<input placeholder="Role" [(ngModel)]="profileData.companyDetails.contactName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control profile-info-address" disabled="{{disabled}}">
+					</div>
+					<div class="profile-detail">
+						<span><i class="fa fa-users detail-icon"></i></span>
+						<span class="hint-text detail-info">{{ profileData.companyDetails.contactCount}}</span>
+					</div>
+					<div class="profile-detail">
+						<span><i class="fa fa-flag detail-icon"></i></span>
+						<span class="hint-text detail-info">{{ profileData.companyDetails.foundDate | date:'MMMM d, y'}}</span>
+					</div>
+					<div class="profile-detail">
+						<span><i class="fa fa-money detail-icon"></i></span>
+						<span class="hint-text detail-info">$ {{ profileData.companyDetails.earned}}</span>
+					</div>
+					<div class="profile-detail other-profile">
+						<a href="javascript:void(0)"><span class="social-icon" style="font-weight: bold;">cb</span><span>&nbsp;</span></a>
+						<a href="javascript:void(0)" *ngIf="profileData.companyDetails.linkedSocial.linkedin == 'true'"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+                        <a href="javascript:void(0)" *ngIf="profileData.companyDetails.linkedSocial.twitter == 'true'"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+                        <a href="javascript:void(0)" *ngIf="profileData.companyDetails.linkedSocial.facebook == 'true'"><span class="social-icon fa fa-facebook"></span></a>
+                    </div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card card-transparent company-relation tags" style="height: auto;" *ngIf="tagList.length > 0">
+					<div class="notes-header">
+						<span class="tag-title">Tags</span>
+						<span class="m-l-20"><i class="fa fa-gear"></i></span>
+						<a href="javascript:void(0)" (click)="showAddTagModal()">+ Add</a>
+					</div>
+					<div class="notes-body tag-body">
+						<div class="notes-block">
+							<div class="ele-tag" *ngFor="let tag of tagList; let i = index">
+								<span><i class="fa fa-tag"></i></span>
+								<span class="m-l-5">{{tag}}</span>
+								<span class="m-l-5" (click)="removeTag(i)" style="cursor: pointer;"><i class="fa fa-times-circle"></i></span>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="show-hide">
+						<a href="javascript:void(0)" class="small">Show more</a>
+						<a href="javascript:void(0)" class="small">hide</a>
+					</div> -->
+				</div>
+		      	<div class="card card-transparent card-avtivity">
+		          	<pg-tabset tabAnimation="slide-left" Type="simple" ShowPagination="true">
+		              	<pg-tab>
+			                <ng-template #TabHeading>
+			                  Activity
+			                </ng-template>
+		                	<div class="timeline-container top-circle">
+		                		<div class="filter-activity">
+		                			<pg-select style="width: 100%;" [(ngModel)]="selectedOption" [PlaceHolder]="'Filter Activity'" AllowClear ShowSearch>
+					                    <pg-option
+					                    *ngFor="let option of options"
+					                    [Label]="option.label"
+					                    [Value]="option"
+					                    [Disabled]="option.disabled">
+					                  </pg-option>
+				                  	</pg-select>
+		                		</div>
+				              	<section class="timeline p-t-50">
+					                <div class="timeline-block">
+					                  	<div class="timeline-point">
+					                  	</div>
+					                  	<div class="timeline-content">
+						                    <div class="card card-transparent">
+						                      	<div class="card-description">
+							                        <div class="action action-user">
+							                        	<span><i class="fa fa-user"></i></span>
+							                        </div>
+							                        <div class="m-l-10">
+							                        	<span class="hint-text">John Kelly was imported from Getprofiles prospector</span>
+							                        	<br>
+					                      				<span class="hint-text">Jan 3 at 10:44 AM EDT</span>
+					                    			</div>
+						                      	</div>
+						                    </div>
+					                  	</div>
+					                </div>
+				              	</section>
+
+				              	<section class="timeline p-t-20">
+					                <div class="timeline-block">
+					                  	<div class="timeline-point">
+					                  	</div>
+					                  	<div class="timeline-content">
+						                    <div class="card card-transparent">
+						                      	<div class="card-description">
+							                        <div class="action action-user">
+							                        	<span><i class="fa fa-user"></i></span>
+							                        </div>
+							                        <div class="m-l-10">
+							                        	<span class="hint-text">John Kelly is added to MyNewMailApp Campaign</span>
+							                        	<br>
+					                      				<span class="hint-text">Jan 3 at 11:14 AM EDT</span>
+					                    			</div>
+						                      	</div>
+						                    </div>
+					                  	</div>
+					                </div>
+				              	</section>
+
+				              	<section class="timeline p-t-20">
+					                <div class="timeline-block">
+					                  	<div class="timeline-point">
+					                  	</div>
+					                  	<div class="timeline-content">
+					                    	<div class="event-date">
+					                      		<span class="hint-text">Jan 3 at 12:14 AM EDT</span>
+					                    	</div>
+						                    <div class="card card-transparent">
+						                      	<div class="card-description">
+							                        <div class="action action-email">
+							                        	<span><i class="pg pg-mail"></i></span>
+							                        </div>
+							                        <div class="m-l-10">
+							                        	<span class="hint-text">An email has been sent to John Kelly</span>
+							                        	<br>
+					                      				<span class="hint-text">Jan 3 at 12:14 AM EDT</span>
+					                    			</div>
+						                      	</div>
+						                    </div>
+					                  	</div>
+					                </div>
+				              	</section>
+				              
+				            </div>
+		              	</pg-tab>
+		          	</pg-tabset>
+		      	</div>
+			</div>
+		</div>
+	</div>
+</pg-container>
+
+<div bsModal #NotesModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg notes-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="NotesModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Notes</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>ADD A NOTE</label>
+                            <textarea [(ngModel)]="noteContent"></textarea>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="NotesModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="addNotes()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #TagModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg Tag-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="TagModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Tag User</span></h5>
+                </div>
+                <div class="modal-body no-padding no-margin">
+                	<div class="add-tags col-md-12 no-padding">
+	                	<div class="input-group-prepend">
+		                  	<span class="input-group-text transparent"><i class="fa fa-search"></i>
+		                  	</span>
+		              	</div>
+		              	<div class="form-group typehead">
+						    <input placeholder="States of USA" [(ngModel)]="selectedTag" [typeahead]="availableTags"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control">
+						</div>
+                	</div>
+                </div>
+                <div class="modal-footer">
+                	<a href="javascript:void(0)" style="margin-right: auto;">
+                		<span>Manage Tags</span>
+                		<span class="m-l-20"><i class="fa fa-gear"></i></span>
+                	</a>
+                	<button class="btn btn-primary" (click)="addTag(selectedTag)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

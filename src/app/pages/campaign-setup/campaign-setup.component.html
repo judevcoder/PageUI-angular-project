@@ -1,0 +1,805 @@
+<pg-container>
+  	<div class="row">
+	    <div class="col-lg-12">
+	      	<div class="card card-transparent campaign-setup">
+	          	<pg-tabset tabAnimation="slide-left" Type="simple" ShowPagination="true" [SelectedIndex]="selectedStep">>
+	              	<pg-tab>
+		                <ng-template #TabHeading>
+		                  Campaign Setup
+		                </ng-template>
+		                <div id="campaign_setup">
+			            	<div class="row top-space">
+			            		<div class="col-lg-12" style="display: inline-flex;">
+			            			<input placeholder="Campaign Name" [(ngModel)]="campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}">
+		            				<ng-container *ngIf="disabled; else action_save">
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+			            			</ng-container>
+			            			<ng-template #action_save>
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+			            			</ng-template>
+			            		</div>
+			            	</div>
+			            	<div class="row top-space">
+			            		<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+			            			<input placeholder="Campaign Name" [(ngModel)]="campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control" id="input_campaign_name">
+			            		</div>
+			            	</div>
+			            	<div class="row top-space">
+			            		<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+			            			<pg-select style="width: 100%;" [(ngModel)]="selectedProspector" [PlaceHolder]="'Choose a list from Prospector'" AllowClear ShowSearch>
+					                    <pg-option
+					                    *ngFor="let option of prospectorOptions"
+					                    [Label]="option.label"
+					                    [Value]="option"
+					                    [Disabled]="option.disabled">
+					                  </pg-option>
+									</pg-select>
+									<a href="javascript:void(0)" class="import-list" (click)="importOwnList()">Import your own list</a>
+			            		</div>
+			            	</div>
+			            	<div class="row top-space-last">
+			            		<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+			            			<pg-select style="width: 100%;" [(ngModel)]="selectedMailbox" [PlaceHolder]="'Select Mailbox'" AllowClear ShowSearch>
+					                    <pg-option
+					                    *ngFor="let option of mailboxOptions"
+					                    [Label]="option.label"
+					                    [Value]="option"
+					                    [Disabled]="option.disabled">
+					                  </pg-option>
+									</pg-select>
+			            		</div>
+			            	</div>
+			            	<div class="row top-space">
+			            		<div class="col-lg-4 offset-lg-4 action_btn col-md-6 offset-md-3">
+			            			<button class="btn cancel_btn btn-default btn-sm  btn-rounded m-r-20" (click)="dropCampaign()">Cancel</button>
+		                    		<button class="btn btn-sm  btn-rounded btn-primary" (click)="navigateToMessaging()">Next</button>
+			            		</div>
+			            	</div>
+			            </div>
+	              	</pg-tab>
+	              	<pg-tab [Disabled]="disabledTabs.messagingTab">
+		                <ng-template #TabHeading>
+		                    Messaging
+		                </ng-template>
+		                <div class="messaging_tab">
+		                	<div class="message-block">
+				                <div class="row m-t-50">
+				            		<div class="col-lg-12" style="display: inline-flex;">
+				            			<input placeholder="Campaign Name" [(ngModel)]="campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}">
+			            				<ng-container *ngIf="disabled; else action_save">
+				            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+				            			</ng-container>
+				            			<ng-template #action_save>
+				            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+				            			</ng-template>
+				            		</div>
+				            	</div>
+				            	<div class="row m-t-50">
+				            		<div class="col-lg-8 offset-lg-2 inital-email {{(clickAdd ? '': 'hidden')}}"><p>Initial Email</p></div>
+				            		<div class="col-lg-8 offset-lg-2">
+				            			<input placeholder="{{(clickAdd ? 'Subject  My new beautiful campaign': 'Subject')}}" [(ngModel)]="subject" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control" class="subject" id="subject">
+				            			<span class="exchange-icon" (click)="switchSub($event)"><i class="fa fa-exchange"></i></span>
+				            		</div>
+				            	</div>
+				            	<div class="row m-t-20">
+				            		<div class="col-lg-8 offset-lg-2">
+					            		<div class="card card-default" id="message_box">
+				            				<div class="action-message pull-right">
+					            				<a class="m-l-15 edit-save-btn code-btn" href="javascript:void(0)" (click)="showInsertDropDown($event)"><span><i class="fa fa-code"></i></span></a>
+					            				<div class="dropdown-menu insert-dropdown hidden">
+					                            	<a class="dropdown-item " href="javascript:void(0)" *ngFor="let insert of insertList" (click)="insertValue($event, insert.value)">{{insert.label}}</a>
+			                                    </div>
+			                                    <a class="m-l-15 edit-save-btn template-btn" href="javascript:void(0)" (click)="insertTemplate($event)"><span><i class="fa fa-file-text"></i></span></a>
+					            				<a class="m-l-15 edit-save-btn save-btn" href="javascript:void(0)" (click)="toogleActionBtn($event)"><span><i class="fa fa-save"></i></span></a>
+						            		</div>
+					            			<div class="card-body no-scroll card-toolbar input-textarea">
+								            	<quill-editor [style]="{height: '180px'}"
+								            	[modules]="editorModules"
+								            	(keyup)="ChangeText($event)"
+												(mouseover)="ChangeText($event)">
+												</quill-editor>
+											</div>
+										</div>
+				            		</div>
+								</div>
+		                	</div>
+
+							<ng-container *ngFor="let addon of addOnLists">
+								<div class="message-block">
+									<div class="row m-t-20">
+					            		<div class="col-lg-8 offset-lg-2 addon-info">
+					            			<div style="width: 23%"><p>On Link Clicks</p></div>
+					            			<span class="info-tooltip">
+								            	<span class="tooltiptext" id="myTooltip">This icon must provide a tool-tip on hover</span>
+								            	<i class="fa fa-info-circle track-info"></i>
+								            </span>
+						            		<select class="m-l-10">
+						            			<option *ngFor="let option of selectOnDayOptions" value="{{option.value}}">{{option.label}}</option>
+						            		</select>
+						            		<input placeholder="Clicked link URL must exactly match:" class="clicked-link m-l-15">
+						            		<span class="info-tooltip">
+								            	<span class="tooltiptext" id="myTooltip">This icon must provide a tool-tip on hover</span>
+								            	<i class="fa fa-question-circle"></i>
+								            </span>
+					            		</div>
+					            	</div>
+									<div class="row m-t-10">
+					            		<div class="col-lg-8 offset-lg-2">
+					            			<input placeholder="Subject" class="subject" id="subject_{{addon}}">
+					            			<span class="exchange-icon" (click)="switchSub($event)"><i class="fa fa-exchange"></i></span>
+					            		</div>
+					            	</div>
+									<div class="row m-t-20">
+					            		<div class="col-lg-8 offset-lg-2">
+						            		<div class="card card-default" id="addon_{{addon}}">
+					            				<div class="action-message pull-right">
+					            					<a class="m-l-15 edit-save-btn code-btn" href="javascript:void(0)" (click)="showInsertDropDown($event)"><span><i class="fa fa-code"></i></span></a>
+						            				<div class="dropdown-menu insert-dropdown hidden">
+						                            	<a class="dropdown-item " href="javascript:void(0)" *ngFor="let insert of insertList" (click)="insertValue($event, insert.value)">{{insert.label}}</a>
+				                                    </div>
+				                                    <a class="m-l-15 edit-save-btn template-btn" href="javascript:void(0)" (click)="insertTemplate($event)"><span><i class="fa fa-file-text"></i></span></a>
+						            				<a class="m-l-15 edit-save-btn save-btn" href="javascript:void(0)" (click)="toogleActionBtn($event)"><span><i class="fa fa-save"></i></span></a>
+						            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteMessage(addon)"><span><i class="fa fa-trash-o"></i></span></a>
+							            		</div>
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+									            	<quill-editor [style]="{height: '180px'}"
+									            	[modules]="editorModules"
+									            	(keyup)="ChangeText($event)"
+									            	(mouseover)="ChangeText($event)">
+													</quill-editor>
+												</div>
+											</div>
+					            		</div>
+									</div>
+								</div>
+							</ng-container>
+
+							<ng-container *ngFor="let addFollow of addFollowLists">
+								<div class="message-block">
+									<div class="row m-t-20">
+					            		<div class="col-lg-8 offset-lg-2 addon-info">
+					            			<div style="width: 23%"><p>{{addFollow + 1}}st Follow-up</p></div>
+						            		<select class="m-l-10">
+						            			<option *ngFor="let option of selectOnDayOptions" value="{{option.value}}">{{option.label}}</option>
+						            		</select>
+					            		</div>
+					            	</div>
+									<div class="row m-t-10">
+					            		<div class="col-lg-8 offset-lg-2 followup-subject">
+					            			<input placeholder="Subject  Re: My new beautiful campaign" class="subject" id="subject_follow{{addFollow}}">
+					            			<span class="exchange-icon" (click)="switchSub($event)"><i class="fa fa-exchange"></i></span>
+					            		</div>
+					            	</div>
+									<div class="row m-t-20">
+					            		<div class="col-lg-8 offset-lg-2">
+						            		<div class="card card-default" id="add_follow_{{addFollow}}">
+					            				<div class="action-message pull-right">
+					            					<a class="m-l-15 edit-save-btn code-btn" href="javascript:void(0)" (click)="showInsertDropDown($event)"><span><i class="fa fa-code"></i></span></a>
+						            				<div class="dropdown-menu insert-dropdown hidden">
+						                            	<a class="dropdown-item " href="javascript:void(0)" *ngFor="let insert of insertList" (click)="insertValue($event, insert.value)">{{insert.label}}</a>
+				                                    </div>
+				                                    <a class="m-l-15 edit-save-btn template-btn" href="javascript:void(0)" (click)="insertTemplate($event)"><span><i class="fa fa-file-text"></i></span></a>
+						            				<a class="m-l-15 edit-save-btn save-btn" href="javascript:void(0)" (click)="toogleActionBtn($event)"><span><i class="fa fa-save"></i></span></a>
+							            			<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteFollowUpMessage(addFollow)"><span><i class="fa fa-trash-o"></i></span></a>
+							            		</div>
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+									            	<quill-editor [style]="{height: '180px'}"
+									            	[modules]="editorModules"
+									            	(keyup)="ChangeText($event)"
+									            	(mouseover)="ChangeText($event)">
+													</quill-editor>
+												</div>
+											</div>
+					            		</div>
+									</div>
+								</div>
+							</ng-container>
+
+							<div class="row">
+			            		<div class="col-lg-8 offset-lg-2" style="display: inline-flex;">
+			            			<div><a href="javascript:void(0)" class="add-message" (click)="addFollowUpClick()">+ Add Follow-up</a></div>
+			            			<div class="m-l-35"><a href="javascript:void(0)" class="add-message" (click)="addOnClick()">+ Add On Click</a></div>
+			            		</div>
+			            	</div>
+
+			            	<div class="row top-space">
+			            		<div class="col-lg-8 offset-lg-2 action_btn col-md-6 offset-md-3">
+			            			<button class="btn cancel_btn btn-default btn-sm  btn-rounded m-r-20" (click)="dropCampaign()">Cancel</button>
+			            			<button class="btn btn-default btn-sm  btn-rounded m-r-20" (click)="goToPrevTab()">Back</button>
+	                        		<button class="btn btn-sm  btn-rounded btn-primary" (click)="navigateToPreview()">Next</button>
+			            		</div>
+			            	</div>
+			            </div>
+	              	</pg-tab>
+	              	<pg-tab [Disabled]="disabledTabs.previewTab">
+	                  	<ng-template #TabHeading>
+	                      	Preview
+	                  	</ng-template>
+	                  	
+			            <div class="preview_tab">
+				            <div class="row m-t-50">
+			            		<div class="col-lg-12" style="display: inline-flex;">
+			            			<input placeholder="Campaign Name" [(ngModel)]="campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}">
+		            				<ng-container *ngIf="disabled; else action_save">
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+			            			</ng-container>
+			            			<ng-template #action_save>
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+			            			</ng-template>
+			            		</div>
+			            	</div>
+
+			            	<div class="inner-content full-height message-preview-box">
+							    <div class="split-view preview-view">
+							      	<div class="split-list" [class.slideLeft]="isEmailSelected">
+							        	<div class="input-group transparent">
+							        		<div class="input-group-prepend search-message-filter">
+							                    <span class="input-group-text transparent"><i class="pg pg-search m-l-30"></i></span>
+							                </div>
+							                <input type="text" class="form-control search-message-filter" [(ngModel)]="filterKeyword" placeholder="Type anywhere to search" id="filter_keyword" name="filter_keyword" (keyup)="searchContact($event)">
+						              	</div>
+								      	<pg-list-view-container  class="scrollable full-height">
+											<pg-list-item *ngFor="let emailGroup of emailList; let i = index">
+												<li class="item padding-15" [class.active]="item === selectedEmail">
+													<div class="thumbnail-wrapper d32 circular m-t-20"><img alt="" height="40" src="{{emailGroup.contact.dp}}" width="40"></div>
+													<div class="inline m-l-15 m-t-10">
+								                      	<a href="javascript:void(0)"><p class="recipients no-margin small">{{emailGroup.contact.name}}</p></a>
+								                      	<ul style="display: inline-flex; border-bottom: none;">
+								                      		<li *ngFor="let item of emailGroup.list; let j = index" style="padding: 2px;">
+								                      			<button type="button" class="btn btn-default" id="btn_{{i+1}}_{{j+1}}" (click)="onSelect(item, i, j)"><i>{{j+1}}</i></button>
+								                      		</li>
+								                      	</ul>
+								                    </div>
+								                    <div class="clearfix"></div>
+								                </li>
+											</pg-list-item>
+										</pg-list-view-container>
+							      	</div>
+							      	<div class="split-details">
+								        <ng-template #noResultBlock>
+								          	<div class="no-result" >
+								            	<h1>No email has been selected</h1>
+								          	</div>
+								        </ng-template>
+								        <div *ngIf="selectedEmail; else noResultBlock" class="email-content-wrapper">
+								          	<div class="actions-wrapper menuclipper bg-master-lightest scrollable">
+									            <ul class="actions menuclipper-menu no-margin p-l-20 d-flex">
+									              	<li class="d-lg-none d-xl-none">
+									                	<a href="javascript:void(0;)" (click)="onBack()" class="split-list-toggle"><i class="fa fa-angle-left"></i> All Inboxes</a>
+									              	</li>
+									              	<li class="no-padding"><a href="javascript:void(0)">{{selectedEmail.key | ordinal}} Message</a></li>
+									              	<li class="no-padding "><a href="javascript:void(0)" class="text-danger" (click)="editMailContent()">Edit</a>
+									              	</li>
+									            </ul>
+								            	<div class="clearfix"></div>
+								          	</div>
+								          	<div class="email-content">
+									            <div class="email-content-header">
+									              	<div class="thumbnail-wrapper d48 circular bordered">
+									                	<img width="40" height="40" alt="" src="{{selectedEmail.dp}}">
+									              	</div>
+									              	<div class="sender inline m-l-10">
+									                	<p class="name no-margin bold">
+									                    	{{selectedContact.contact.name}}
+									                	</p>
+									                	<p class="datetime no-margin">
+									                    	{{selectedContact.contact.email}}
+									                	</p>
+									                	<p class="datetime no-margin">
+									                    	{{selectedEmail.from.email}}
+									                	</p>
+									              	</div>
+									              	<div class="clearfix"></div>
+								              		<div class="subject m-t-20 m-b-50 semi-bold email-subject">
+								                  		Subject - {{selectedEmail.subject}}
+								              		</div>
+									            </div>
+								            	<div class="clearfix"></div>
+							            		<div class="email-content-body m-t-20" innerHTML="{{selectedEmail.body}}">
+								            	</div>
+								          </div>
+								        </div>
+							      	</div>
+							    </div>
+							</div>
+
+			            	<div class="row top-space">
+			            		<div class="col-lg-8 offset-lg-2 action_btn col-md-6 offset-md-3">
+			            			<button class="btn cancel_btn btn-default btn-sm  btn-rounded m-r-20" (click)="dropCampaign()">Cancel</button>
+			            			<button class="btn btn-default btn-sm  btn-rounded m-r-20" (click)="goToPrevTab()">Back</button>
+	                        		<button class="btn btn-sm  btn-rounded btn-primary" (click)="navigateToEmailSetting()">Next</button>
+			            		</div>
+			            	</div>
+			            </div>
+	              	</pg-tab>
+	              	<pg-tab [Disabled]="disabledTabs.emailSettingTab">
+			            <ng-template #TabHeading>
+			                Email Settings
+			            </ng-template>
+			            <div id="email_settings">
+			            	<div class="row m-t-50">
+			            		<div class="col-lg-12" style="display: inline-flex;">
+			            			<input placeholder="Campaign Name" [(ngModel)]="campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}">
+		            				<ng-container *ngIf="disabled; else action_save">
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+			            			</ng-container>
+			            			<ng-template #action_save>
+			            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+			            			</ng-template>
+			            		</div>
+			            	</div>
+		            		<div class="row m-t-40">
+		            			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+				                	<span class="help hint-text small m-l-10">Maximum email per day (max 300)</span>
+				                	<input type="number" class="form-control m-t-5 email-settings-input" max="300" min="0" [(ngModel)]="maximEmailPerDay">
+		            			</div>
+				            </div>
+				            <div class="row m-t-40">
+		            			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
+				                	<span class="help hint-text small m-l-10">Delay between each email (in seconds)</span>
+				                	<input type="number" class="form-control m-t-5 email-settings-input" max="59" min="0" [(ngModel)]="delayTime">
+		            			</div>
+				            </div>
+				            <div class="row m-t-40">
+		            			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 email-settings-dropdown">
+				                	<span class="help hint-text small m-l-10">When contact replies</span>
+				                	<pg-select style="width: 100%;" [(ngModel)]="markStatus" [PlaceHolder]="markStatusOptions[0].label" AllowClear ShowSearch>
+					                    <pg-option
+					                    *ngFor="let option of markStatusOptions"
+					                    [Label]="option.label"
+					                    [Value]="option">
+					                  	</pg-option>
+				                  	</pg-select>
+		            			</div>
+				            </div>
+				            <div class="row m-t-40">
+		            			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 email-settings-dropdown">
+				                	<span class="help hint-text small m-l-10">Mark contact as completed if no response after (attempts)</span>
+				                	<pg-select style="width: 100%;" [(ngModel)]="markStatus" [PlaceHolder]="'Select Option'" AllowClear ShowSearch>
+					                    <pg-option
+					                    *ngFor="let option of markStatusOptions"
+					                    [Label]="option.label"
+					                    [Value]="option">
+					                  	</pg-option>
+				                  	</pg-select>
+		            			</div>
+				            </div>
+				            <div class="row m-t-40">
+		            			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 email-settings-dropdown">
+				                	<div class="input-group date">
+				                		<div class="input-group-prepend time-picker-icon">
+					                        <span class="input-group-text transparent">
+					                            <i class="pg pg-clock m-l-10"></i>
+					                        </span>
+					                    </div>
+					                    <input type="email" class="form-control" style="background: #f6f9fa; border-left: none;" (focus)="showScheduleModal()">
+					                    <!-- <pg-timepicker [(ngModel)]="_date"></pg-timepicker> -->
+				                  	</div>
+		            			</div>
+				            </div>
+				            <div class="row m-t-40">
+			            		<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 email-settings-checkbox">
+			            			<div class="checkbox check-success checkbox-circle" id="track_open">
+						              	<input type="checkbox" value="1" id="track_open_checkbox">
+						              	<label for="track_open_checkbox">Track Opens</label>
+						            </div>
+						            <span class="info-tooltip">
+						            	<span class="tooltiptext" id="myTooltip">This icon must provide a tool-tip on hover</span>
+						            	<i class="fa fa-info-circle track-info"></i>
+						            </span>
+						            <div class="checkbox check-success checkbox-circle" id="track_click">
+						              	<input type="checkbox" value="1" id="track_click_checkbox">
+						              	<label for="track_click_checkbox">Track Clicks</label>
+						            </div>
+			            		</div>
+			            	</div>
+				            <div class="row top-space">
+			            		<div class="col-lg-4 offset-lg-4 action_btn col-md-6 offset-md-3">
+			            			<button class="btn cancel_btn btn-default btn-sm  btn-rounded m-r-20" (click)="dropCampaign()">Cancel</button>
+			            			<button class="btn btn-default btn-sm  btn-rounded m-r-20" (click)="goToPrevTab()">Back</button>
+		                    		<button class="btn btn-sm  btn-rounded launch_btn" (click)="launchCampaign()">Launch</button>
+			            		</div>
+			            	</div>
+			            </div>
+			        </pg-tab>
+	          	</pg-tabset>
+	      	</div>
+	    </div>
+  	</div>
+</pg-container>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg import-modal" style="width: 900px;">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Import your leads from a CSV</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <form role="form">
+                        <div class="form-group-attached">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6 offset-md-3">
+                                        <ul>
+                                            <li class="step-upload-csv current-step">
+                                                <span class="dot">
+                                                    <i class="step-num">1</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Upload CSV</span>
+                                            </li>
+                                            <li class="step-map-attribute">
+                                                <span class="dot">
+                                                    <i class="step-num">2</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Map attributes</span>
+                                            </li>
+                                            <li class="step-import">
+                                                <span class="dot">
+                                                    <i class="step-num">3</i>
+                                                </span>
+                                                <span class="fa fa-check-circle"></span>
+                                                <span>&nbsp;</span>
+                                                <span>Import</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="upload-csv-section b-dashed m-t-50 col-md-10 offset-md-1 p-t-30">
+                                    <ng-container *ngIf="fileName; else uploading">
+                                        <div class="uploaded-csv">
+                                            <span class="fa fa-file-archive-o"></span><span>&nbsp;</span><span><strong>{{fileName}}</strong></span>
+                                            <a href="javascript:void(0)" (click)="removeSelectedFile()"><p class="hint-text">remove</p></a>
+                                            <button class="m-t-20 btn btn-primary btn-cons" (click)="uploadFile()">Upload</button> 
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #uploading>
+                                        <div class="uploading-csv">
+                                            <h5><strong>Drag and drop your CSV file here</strong></h5>
+                                            <input type="file" class="hidden file-select" (change)="selectFile($event)">
+                                            <a href="javascript:void(0)" (click)="uploadEvent()">Or select a file from your computer...</a>
+                                            <p class="hint-text m-t-20">Your CSV must have an email address and full names for each person.</p>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <div class="map-attributes col-md-10 offset-md-1 p-t-30 hidden">
+                                    <div class="row">
+                                        <div class="col-md-5 show-data" style="padding-right: 0px;">
+                                            <div class="column"><h4 class="m-l-30"><strong>Column 1</strong></h4></div>
+                                            <div class="column-name p-l-30"><p class="m-l-30 hint-text"></p>Name</div>
+                                            <div class="row-value"><span class="row-index">1</span><span class="value">Doug Wong</span></div>
+                                            <div class="row-value"><span class="row-index">2</span><span class="value">Jeremy Wanger</span></div>
+                                            <div class="row-value"><span class="row-index">3</span><span class="value">Sam Dobbins</span></div>
+                                            <div class="row-value"><span class="row-index">4</span><span class="value">Jody Allquist</span></div>
+                                            <div class="row-value"><span class="row-index">5</span><span class="value">Amit Shah</span></div>
+                                            <div class="row-value" style="border-bottom: none"><span class="row-index">..</span><span class="value">+ 44 more</span></div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-5 show-data" style="padding-left: 0px;">
+                                            <div class="column"><h4 class="m-l-30"><strong>Column 2</strong></h4></div>
+                                            <div class="column-name p-l-30"><p class="m-l-30 hint-text"></p>Email</div>
+                                            <div class="row-value"><span class="row-index">1</span><span class="value">Doug Wong</span></div>
+                                            <div class="row-value"><span class="row-index">2</span><span class="value">Jeremy Wanger</span></div>
+                                            <div class="row-value"><span class="row-index">3</span><span class="value">Sam Dobbins</span></div>
+                                            <div class="row-value"><span class="row-index">4</span><span class="value">Jody Allquist</span></div>
+                                            <div class="row-value"><span class="row-index">5</span><span class="value">Amit Shah</span></div>
+                                            <div class="row-value" style="border-bottom: none"><span class="row-index">..</span><span class="value">+ 44 more</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #editMailContentModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg edit-email-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="editMailContentModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Edit Message</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div pgFormGroupDefault class="form-group form-group-default">
+                                <label>To Email</label>
+                                <input *ngIf="selectedContact" type="text" class="form-control" id="to_email" name="to_email" [(ngModel)]="selectedContact.contact.email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div pgFormGroupDefault class="form-group form-group-default">
+                                <label>From Email</label>
+                                <input *ngIf="selectedEmail" type="text" class="form-control" id="from_email" name="from_email" [(ngModel)]="selectedEmail.from.email">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                        	<div pgFormGroupDefault class="form-group form-group-default">
+	                            <label>Subject</label>
+	                            <input *ngIf="selectedEmail" type="text" class="form-control" id="subject_edit" name="subject_edit" [(ngModel)]="selectedEmail.subject">
+	                        </div>
+                        </div>
+                        <div class="col-md-12">
+                        	<div pgFormGroupDefault class="form-group form-group-default">
+	                            <label>Message</label>
+				            	<quill-editor *ngIf="selectedEmail"
+				            		[style]="{height: '180px'}"
+		        					[(ngModel)]="selectedEmail.body"
+		        					placeholder="Follow-up 1"
+		        					[modules]="editorModules"
+		        					(onSelectionChanged)="sectionChanged($event)"
+									(onContentChanged)="contentChanged($event)">
+								</quill-editor>
+	                        </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-40">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="editMailContentModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="changeMessage()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #saveTemplateModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg save-template">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="saveTemplateModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Save it as a template</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Name the template</label>
+                                <input type="text" class="form-control" [(ngModel)]="templateName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn pull-right" style="float: right;" (click)="saveTemplateModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="saveTemplate()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #schduleModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg schdule">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-body m-t-30">
+                	<div class="row">
+                		<div class="col-md-7 text-left">
+                			<h5><span class="semi-bold">Schedule</span> EST</h5>	
+                		</div>
+                		<div class="col-md-5 all-schedule">
+                			<p class="">All Schedules</p>
+                			<pg-select [(ngModel)]="selectedSchedule" [PlaceHolder]="'Select'" AllowClear>
+				                <pg-option
+				                *ngFor="let option of schedulesOptionList"
+				                [Label]="option.label"
+				                [Value]="option"
+				                [Disabled]="option.disabled">
+				              </pg-option>
+				            </pg-select>
+                		</div>
+                	</div>
+                    <div class="row m-t-20">
+                        <div class="col-md-12 text-center">
+                            <p>Schedule Time</p>
+                        </div>
+                    </div>
+                    <div class="row m-t-20">
+                        <div class="col-md-6 pull-right">
+                            <div class="input-group date" style="margin-left: auto;">
+			                    <pg-timepicker [(ngModel)]="start_date"></pg-timepicker>
+			                    <div class="input-group-append">
+			                        <span class="input-group-text transparent">
+			                            <i class="pg pg-clock"></i>
+			                        </span>
+			                    </div>
+		                  	</div>
+		                  	<label class="small" style="margin-left: 50px;">Starts at</label>
+                        </div>
+                        <div class="col-md-6 pull-left">
+                            <div class="input-group date">
+			                    <pg-timepicker [(ngModel)]="end_date"></pg-timepicker>
+			                    <div class="input-group-append">
+			                        <span class="input-group-text transparent">
+			                            <i class="pg pg-clock"></i>
+			                        </span>
+			                    </div>
+		                  	</div>
+		                  	<label class="small">Ends at</label>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12 text-center">
+                            <span class="semi-bold">Schedule Days</span><span>&nbsp;</span>
+                            <span class="small">(Please click on the days to select or unselect)</span>
+                        </div>
+                    </div>
+                    <div class="row m-t-10">
+                        <div class="col-md-12 text-center">
+                            <ul class="schedule-days" id="schedule_days">
+                                <li *ngFor="let day of scheduleDays; let i = index" class="schedule-date">
+                                    <button type="button" id="btn_{{i}}" class="btn btn-default {{day.state}}" (click)="addScheduleDay(day.state, i)"><span>{{day.day}}</span></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row m-t-30 select-timezone">
+                        <div class="col-md-12 text-center">
+                            <p>Select Time Zone</p>
+                            <pg-select [(ngModel)]="selectedTimeZone" [PlaceHolder]="'Select Time Zone'" AllowClear>
+				                <pg-option
+				                *ngFor="let timezone of timezoneList"
+				                [Label]="timezone.text"
+				                [Value]="timezone"
+				                [Disabled]="timezone.disabled">
+				              </pg-option>
+				            </pg-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                    	<button type="button" class="btn btn-primary pull-left" (click)="addNew()">Add New</button>
+                        <button type="button" class="btn btn-primary pull-right" (click)="saveSchedule()">Save</button>
+                        <button type="button" class="btn pull-right" style="margin-right: 10px;" (click)="schduleModal.hide()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #draftModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg draft-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="draftModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Save this campaign as draft?</span></h5>
+                </div>
+                <div class="modal-footer m-t-50">
+                    <div class="col-md-12">
+                        <button type="button" class="btn pull-right" (click)="draftModal.hide()">Cancel</button>
+                        <button type="button" class="btn btn-danger pull-right" style="margin-right: 10px;" (click)="saveCampaign()">No, Delete it</button>
+                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="addNew()">Save for Later</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #EmailTemplateModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg email-template-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <h5><span class="semi-bold">Select an email and template</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                    	<input *ngIf="selectedTemplate" placeholder="Subject" id="setup_modalSubject" [(ngModel)]="selectedTemplate.title" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control">
+                    	<div class="split-view">
+						    <div class="split-list" [class.slideLeft]="isTemplateSelected">
+						        <a class="list-refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+						        <pg-list-view-container  class="scrollable full-height">
+						            <pg-list-item *ngFor="let templateGroup of templateList">
+						                <ng-template #ItemHeading>
+						                    {{templateGroup.group}}
+						                </ng-template>
+						                <li class="item padding-15" *ngFor="let template of templateGroup.list" (click)="onSelectTemplate(template)"  [class.active]="template === selectedTemplate">
+						                	<p class="body no-margin" innerHTML="{{template.title}}"></p>
+						                </li>
+						            </pg-list-item>
+						        </pg-list-view-container>
+						    </div>
+						    <div class="split-details">
+						        <ng-template #noTemplateBlock>
+						            <div class="no-result" >
+						                <h1>No Template has been selected</h1>
+						            </div>
+						        </ng-template>
+						        <div *ngIf="selectedTemplate; else noTemplateBlock" class="email-content-wrapper">
+						            <div class="email-content">
+						            	<quill-editor
+						            		[style]="{height: '470px'}"
+				        					[(ngModel)]="selectedTemplate.template">
+										</quill-editor>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="EmailTemplateModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-danger pull-right" style="margin-right: 10px;" (click)="useSelectedTemplate(selectedTemplate.title, selectedTemplate.template)">USE THIS TEMPLATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #saveAsTemplateModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg email-template-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="saveAsTemplateModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Save this template</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                    	<input placeholder="Subject" id="save_as_template_subject" [(ngModel)]="selectedSaveAsTemplate.title" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control">
+                    	<div class="split-view">
+						    <div class="split-list">
+						        <a class="list-refresh" href="javascript:void(0)"><i class="fa fa-refresh"></i></a>
+						        <pg-list-view-container  class="scrollable full-height">
+						            <pg-list-item *ngFor="let templateGroup of templateList">
+						                <ng-template #ItemHeading>
+						                    {{templateGroup.group}}
+						                </ng-template>
+						                <li class="item padding-15" *ngFor="let template of templateGroup.list" (click)="onSelectSaveAsTemplate(template)"  [class.active]="template === selectedTemplate">
+						                	<p class="body no-margin" innerHTML="{{template.title}}"></p>
+						                </li>
+						            </pg-list-item>
+						        </pg-list-view-container>
+						    </div>
+						    <div class="split-details">
+						        <div class="email-content-wrapper">
+						            <div class="email-content">
+						            	<quill-editor
+						            		[style]="{height: '470px'}"
+				        					[(ngModel)]="selectedSaveAsTemplate.template">
+										</quill-editor>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="saveAsTemplateModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="showSaveTemplateModal()">SAVE THIS TEMPLATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

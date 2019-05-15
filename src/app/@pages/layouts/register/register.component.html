@@ -1,0 +1,75 @@
+<div class="register-container full-height sm-p-t-30">
+    <div class="d-flex justify-content-center flex-column full-height ">
+        <img src="assets/img/logo_blue.png" alt="logo" pgRetina src1x="assets/img/logo.png" src2x="assets/img/logo_2x.png" width="78" height="22">
+        <h3>Pages makes it easy to enjoy what matters the most in your life</h3>
+        <p>
+            Create a pages account. If you have a facebook account, log into it for this process. Sign in with <a href="javascript:void(0)" class="text-info">Facebook</a> or <a href="javascript:void(0)" class="text-info">Google</a>
+        </p>
+        <form class="p-t-15" (ngSubmit)="registerForm.form.valid && register()" role="form" #registerForm="ngForm">
+            <ng-template #alertSignUp></ng-template>
+            <div class="row">
+                <div class="col-md-6">
+                    <div pgFormGroupDefault class="form-group form-group-default" [class.has-error]="fName.invalid && (fName.dirty || fName.touched)">
+                        <label>First Name</label>
+                        <input type="text" placeholder="John" class="form-control" id="txtfname" name="txtfname" [(ngModel)]="model.first_name"  #fName="ngModel" required >
+                    </div>
+                    <div *ngIf="fName.invalid && (fName.dirty || fName.touched)" >
+                        <label  *ngIf="fName.errors.required" class="error" >This field is required.</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div pgFormGroupDefault class="form-group form-group-default" [class.has-error]="LName.invalid && (LName.dirty || LName.touched)">
+                        <label>Last Names</label>
+                        <input type="text" placeholder="Smith" class="form-control" id="txtlname" name="txtlname" [(ngModel)]="model.last_name"  #LName="ngModel" required>
+                    </div>
+                    <div *ngIf="LName.invalid && (LName.dirty || LName.touched)" >
+                        <label  *ngIf="LName.errors.required" class="error" >This field is required.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div pgFormGroupDefault class="form-group form-group-default" [class.has-error]="companyName.invalid && (companyName.dirty || companyName.touched)">
+                        <label>Company Name</label>
+                        <input type="text" placeholder="Google Inc" class="form-control" id="companyname" name="companyname" [(ngModel)]="model.company_name"  #companyName="ngModel" required>
+                    </div>
+                    <div *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)" >
+                        <label  *ngIf="companyName.errors.required" class="error" >This field is required.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div pgFormGroupDefault class="form-group form-group-default" [class.has-error]="email.invalid && (email.dirty || email.touched)">
+                        <label>Email</label>
+                        <input type="email" placeholder="We will send loging details to you" class="form-control" id="txtemail" name="txtemail" [(ngModel)]="model.email"  #email="ngModel" required>
+                    </div>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" >
+                        <label  *ngIf="email.errors.required" class="error" >This field is required.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div pgFormGroupDefault class="form-group form-group-default" [class.has-error]="password.invalid && (password.dirty || password.touched)">
+                        <label>Password</label>
+                        <input type="password"  placeholder="Minimum of 4 Charactors" class="form-control" id="txtpassword" name="txtpassword" [(ngModel)]="model.password"  #password="ngModel" required>
+                    </div>
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" >
+                        <label  *ngIf="password.errors.required" class="error" >This field is required.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-t-10">
+                <div class="col-lg-6 checkbox check-success">
+                    <input type="checkbox" value="1" id="terms_privacy">
+                    <label for="terms_privacy"><p><small>I agree to the <a href="javascript:void(0)" class="text-info">Pages Terms</a> and <a href="javascript:void(0)" class="text-info">Privacy</a>.</small></p></label>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <a href="login" class="text-info small">Already have an account? Sign in</a>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-cons m-t-10" type="submit" [class.disabled]="registerForm.invalid">Create a new account</button>
+        </form>
+    </div>
+</div>

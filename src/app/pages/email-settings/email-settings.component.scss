@@ -1,0 +1,141 @@
+.mailbox-table {
+	border: 2px solid #d8d9da;
+}
+
+.mailbox-table thead tr {
+	height: 60px;
+	th {
+		color: #54698d;
+		border-bottom: 2px solid #d8d9da;
+	}
+}
+
+.mailbox-table tbody tr td {
+	background: none;
+	border-bottom: 2px solid #d8d9da;
+	a {
+	    color: initial;
+	}
+}
+
+.add-mailbox-btn {
+	background: none;
+    float: right;
+    border: 1px solid #d8d9da;
+    &:focus {
+    	background: none;
+    }
+}
+
+.mailbox {
+	padding-bottom: 100px;
+}
+
+.email-settings .nav-tabs-wrapper {
+	width: 350px;
+	margin: auto;
+}
+
+.quill-editor-toolbar {
+	background-color: #fff !important;
+    position: absolute;
+    top: 120px;
+    z-index: 99;
+}
+
+.ql-container.ql-snow {
+    background: #fff;
+    padding-bottom: 50px;
+}
+
+.warning-icon {
+	position: absolute;
+    right: -30px;
+    top: 28px;
+    color: #dc3545;
+}
+
+.warning-n-icon {
+	top: 95px;
+}
+
+.email-settings .dropdown.pull-right {
+	margin-right: 50%;
+}
+
+@media (max-width: 767px) {
+	.mailbox.table-responsive 	{
+	    border: none !important;
+	    padding-bottom: 0;;
+	}
+}
+
+.mailbox-modal {
+	.modal-header {
+		margin: auto;
+	}
+
+	.modal-body .col-md-12 {
+		text-align: center;
+	}
+
+	.email-sending-option {
+		padding: 0 108px;
+
+		.email-option {
+			border: 3px solid #dddddd;
+		}
+
+		.email-option.active {
+			border: 3px solid #5997d8;
+		}
+	}
+}
+
+.alias-modal {
+	width: 50% !important;
+	.modal-header {
+		margin: auto;
+	}
+
+	.modal-body .col-md-12 {
+		text-align: center;
+	}
+
+	.col-md-6 {
+		display: inline-flex;
+	}
+
+	.alias-step {
+		width: 45px;
+	    height: 45px;
+	    background: #0D5AB5;
+	    border-radius: 50%;
+	    color: #fff;
+	    font-size: 31px;
+	    font-family: -webkit-body;
+	    text-align: center;
+	}
+
+	.step-content {
+	    width: 70%;
+	}
+
+	input, input:focus {
+	    border-top: none;
+    	border-left: none;
+    	border-right: none;
+    	background: #ffffff;
+	}
+}
+
+.mailbox-table .dropdown:hover {
+	
+	.mailbox-table-action {
+		cursor: pointer;
+	}
+
+	.dropdown-menu {
+		display: block;
+	}
+}

@@ -1,0 +1,57 @@
+.status--active {
+	color: #37a000;
+}
+
+.status--inactive {
+	color: #a0a0a0;
+}
+
+.status-select {
+	border: none;
+	background: none;
+}
+
+.team-table {
+	thead tr th {
+	    border-bottom: none;
+	}
+
+	tbody tr td {
+	    background: #f6f9fa;
+	}
+}
+
+.team-member-profile {
+	display: inline-flex;
+	width: 100%;
+}
+
+.team-image {
+	.status {
+		position: absolute;
+    	margin-top: 23px;
+    	margin-left: -11px;
+    	.fa-circle {
+			border: 3px solid #fff;
+    		border-radius: 50%;
+		}
+	}
+
+	img {
+		border-radius: 50%;
+	}
+}
+
+.status_td {
+    padding: 30px 0 0 0 !important;
+}
+
+.team-name {
+	font-family: monospace;
+    color: #222222;
+    font-size: 14px;
+}
+
+.select-account-type {
+	padding: 0 15px;
+}

@@ -1,0 +1,850 @@
+<pg-container>
+	<div class="col-md-12">
+		<div class="card card-transparent campaign-detail">
+		    <pg-tabset tabAnimation="slide-left" Type="simple" ShowPagination="true" [SelectedIndex]="selectedStep">
+		        <pg-tab>
+		            <ng-template #TabHeading>
+		                Overview
+		            </ng-template>
+		            <div id="campaign_detail_overview">
+		            	<div class="row m-t-50 display-name">
+		            		<div class="col-md-3 campaign-name">
+		            			<input placeholder="Campaign Name" [(ngModel)]="campaignData.campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}" id="input_campaign_name">
+		            		</div>
+		            		<div class="col-md-2">
+	            				<ng-container *ngIf="disabled; else action_save">
+		            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+		            			</ng-container>
+		            			<ng-template #action_save>
+		            				<a class="m-l-15 ave-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+		            			</ng-template>
+		            		</div>
+		            	</div>
+		            	<div class="row">
+		            		<div class="col-md-12 overview-tabs">
+					          	<div class="card card-transparent flex-row-reverse">
+					              	<pg-tabset tabAnimation="slide-left" Type="simple" TabPosition="right">
+					                  	<pg-tab>
+						                    <ng-template #TabHeading>
+						                      Stats
+						                    </ng-template>
+						                    <div class="row m-t-50">
+						                    	<div class="col-lg-1"></div>
+					                    		<div class="col-lg-2 filter-dorpdown">
+					                    			<pg-select style="width: 70%;" [(ngModel)]="selectedList" [PlaceHolder]="'All Lists'" AllowClear ShowSearch>
+								                    	<pg-option
+								                    	*ngFor="let option of listOptions"
+									                    [Label]="option.label"
+									                    [Value]="option"
+									                    [Disabled]="option.disabled">
+									                  	</pg-option>
+								                  	</pg-select>
+					                    		</div>
+					                    		<div class="col-lg-3 filter-dorpdown">
+					                    			<pg-select style="width: 80%;" [(ngModel)]="selectedCampaignMessage" [PlaceHolder]="'Campaign Messages'" AllowClear ShowSearch>
+								                    	<pg-option
+								                    	*ngFor="let option of campaignMessageOptions"
+									                    [Label]="option.label"
+									                    [Value]="option"
+									                    [Disabled]="option.disabled">
+									                  	</pg-option>
+								                  	</pg-select>
+					                    		</div>
+						                    </div>
+						                    <div class="row column-seperation m-t-30">
+						                    	<div class="col-lg-10 offset-lg-1 toogle-options">
+							                    	<form [formGroup]="myForm" class="form-inline m-r-35" style="float: right;">
+											          	<div class="btn-group btn-group-toogle" btnRadioGroup formControlName="radio">
+											            	<label btnRadio="A" class="btn btn-outline-primary" (click)="showChart()"><i class="fa fa-bar-chart" aria-hidden="true"></i></label>
+											            	<label btnRadio="B" class="btn btn-outline-primary" (click)="showTable()"><i class="fa fa-calendar" aria-hidden="true"></i></label>
+											          	</div>
+											        </form>
+						                    	</div>
+										    </div>
+										    <div class="row">
+						                    	<div class="col-lg-10 offset-lg-1">
+							                        <div class="m-t-30 campaign-chart">
+												        <div class="m-t-50"></div>
+												        <div class="sm-no-padding" [ngClass]="{'p-r-30': !fixChart}">
+												          	<div class="line-chart text-center p-t-20" data-x-grid="false">
+																<nvd3 [options]="options" [data]="data"></nvd3>
+												          	</div>
+												        </div>
+											        </div>
+						                    	</div>
+									      	</div>
+									      	<ng-container *ngIf="data">
+												<div class="stats-table hidden" [ngClass]="{'p-r-30': !fixChart}">
+													<table class="table">
+														<thead>
+															<tr>
+																<th scope="col" *ngFor="let data of tableData">{{data.statusName}}</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td *ngFor="let data of tableData">{{data.statusCount}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</ng-container>
+					                  	</pg-tab>
+					                  	<pg-tab>
+						                    <ng-template #TabHeading>
+						                        Activities
+						                    </ng-template>
+						                    <div class="row">
+						                        <div class="col-lg-12">
+						                        	<div class="col-lg-8 offset-lg-2 filter-activity-dropdown">
+						                    			<pg-select style="width: 20%;" [(ngModel)]="selectedList" [PlaceHolder]="'All Activities'" AllowClear ShowSearch>
+									                    	<pg-option
+									                    	*ngFor="let option of listOptions"
+										                    [Label]="option.label"
+										                    [Value]="option"
+										                    [Disabled]="option.disabled">
+										                  	</pg-option>
+									                  	</pg-select>
+						                    		</div>
+											      	<div class="main-panel col-lg-8 offset-lg-2 activity-box m-t-20">
+											      		<ul>
+								                      		<li *ngFor="let activity of displayActivities">
+								                      			<ng-container *ngIf="activity.stats == 'opened'; else other_activity">
+								                      				<span><i class="fa fa-circle text-danger fs-11"></i></span><span>&nbsp;</span>
+								                      				<span>{{activity.date |  date:'MMM dd'}} at {{ activity.date | date:'h:mm a' }}</span>
+								                      				<span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+								                      				<span><a href="mailto: {{activity.email}}">{{activity.email}}</a></span>
+								                      				<span>&nbsp;</span>
+								                      				<span>opened</span>
+								                      				<span>&nbsp;</span>
+								                      				<span>{{activity.type}}</span>
+								                      			</ng-container>
+								                      			<ng-template #other_activity>
+								                      				<span><i class="fa fa-circle text-success fs-11"></i></span><span>&nbsp;</span>
+								                      				<span>{{activity.date |  date:'MMM dd'}} at {{ activity.date | date:'h:mm a' }}</span>
+								                      				<span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+								                      				<span>{{activity.type}}</span>
+								                      				<span>&nbsp;</span>
+								                      				<span>sent to</span>
+								                      				<span>&nbsp;</span>
+								                      				<span><a href="mailto: {{activity.email}}">{{activity.email}}</a></span>
+								                      			</ng-template>
+														  	</li>
+								                      	</ul>
+								                      	<div *ngIf="viewMore">
+								                      		<button class="btn load-view-activities" (click)="loadViewActivities()">View more activities</button>
+								                      	</div>
+											      	</div>
+							                      	<h5 class="full-width fake-text">Native boostrap pgtabs customized to Pages look and feel, simply changing class name you can change color as well as its animations</h5>
+						                        </div>
+						                    </div>
+					                  	</pg-tab>
+					                </pg-tabset>
+					          	</div>
+					        </div>
+		            	</div>
+		            </div>
+		        </pg-tab>
+		        <pg-tab>
+		            <ng-template #TabHeading>
+		                Sequences
+		            </ng-template>
+		            <div class="sequences_tab">
+		                <div class="row m-t-50 display-name">
+		            		<div class="col-md-3 campaign-name">
+		            			<input placeholder="Campaign Name" [(ngModel)]="campaignData.campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}" id="input_campaign_name">
+		            		</div>
+		            		<div class="col-md-2">
+	            				<ng-container *ngIf="disabled; else action_save">
+		            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+		            			</ng-container>
+		            			<ng-template #action_save>
+		            				<a class="m-l-15 ave-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+		            			</ng-template>
+		            		</div>
+		            	</div>
+	                	<div class="row m-t-50">
+		            		<div class="col-lg-10 offset-lg-1">
+		            			<div class="card card-transparent">
+			            			<pg-collapseset Accordion="true">
+							          	<pg-collapse [Title]="'Initial Message'">
+							            	<div class="card card-default" class="addon" id="initial_message">
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+									            	<quill-editor [style]="{height: '180px'}"
+									            				[(ngModel)]="initialHtmlText"
+									            				placeholder="Initial Message"
+									            				[modules]="quillConfig"
+									            				(onSelectionChanged)="onSelectionChanged($event)"
+              													(onContentChanged)="onContentChanged($event)">
+													  	<div quill-editor-toolbar class="quill-editor-toolbar">
+														    <span class="ql-formats">
+														      	<button class="ql-bold" [title]="'Bold'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-italic" [title]="'Italic'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-underline" [title]="'Underline'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<select class="ql-background" [title]="'Background Color'">
+															        <option selected></option>
+															        <option value="red"></option>
+															        <option value="blue"></option>
+															        <option value="black"></option>
+														      	</select>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-link ql-active"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-image"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-code-block"></button>
+														    </span>
+													  	</div>
+													</quill-editor>
+												</div>
+											</div>
+							          	</pg-collapse>
+							          	<pg-collapse [Title]="'Follow-Up 1'">
+								            <div class="card card-default" class="addon" id="follow-up_1">
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+						            				<div class="action-message">
+						            					<ng-container *ngIf="messageEditable; else save_message">
+						            						<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editMessage($event)"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+						            					</ng-container>
+						            					<ng-template #save_message>
+								            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveMessage($event)"><span><i class="fa fa-save"></i></span></a>
+						            					</ng-template>
+								            			<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteMessage(addFollow, 'follow')"><span><i class="fa fa-trash-o"></i></span></a>
+								            		</div>
+									            	<quill-editor [style]="{height: '180px'}"
+									            				[(ngModel)]="firstFollowUpHtmlText"
+									            				placeholder="Follow-up 1"
+									            				[modules]="quillConfig"
+									            				(onSelectionChanged)="firstFollowOnSelectionChanged($event)"
+              													(onContentChanged)="firstFollowOnContentChanged($event)">
+													  	<div quill-editor-toolbar class="quill-editor-toolbar">
+														    <span class="ql-formats">
+														      	<button class="ql-bold" [title]="'Bold'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-italic" [title]="'Italic'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-underline" [title]="'Underline'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<select class="ql-background" [title]="'Background Color'">
+															        <option selected></option>
+															        <option value="red"></option>
+															        <option value="blue"></option>
+															        <option value="black"></option>
+														      	</select>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-link ql-active"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-image"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-code-block"></button>
+														    </span>
+													  	</div>
+													</quill-editor>
+												</div>
+											</div>
+							          	</pg-collapse>
+							          	<pg-collapse [Title]="'Follow-Up 2'">
+								           	<div class="card card-default" class="addon" id="follow-up_2">
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+						            				<div class="action-message">
+						            					<ng-container *ngIf="messageEditable; else save_message">
+						            						<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editMessage($event)"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+						            					</ng-container>
+						            					<ng-template #save_message>
+								            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveMessage($event)"><span><i class="fa fa-save"></i></span></a>
+						            					</ng-template>
+								            			<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteMessage(addFollow, 'follow')"><span><i class="fa fa-trash-o"></i></span></a>
+								            		</div>
+									            	<quill-editor [style]="{height: '180px'}"
+									            				[(ngModel)]="secondFollowUpHtmlText"
+									            				placeholder="Follow-up 1"
+									            				[modules]="quillConfig"
+									            				(onSelectionChanged)="secondFollowOnSelectionChanged($event)"
+              													(onContentChanged)="secondFollowOnContentChanged($event)">
+													  	<div quill-editor-toolbar class="quill-editor-toolbar">
+														    <span class="ql-formats">
+														      	<button class="ql-bold" [title]="'Bold'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-italic" [title]="'Italic'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-underline" [title]="'Underline'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<select class="ql-background" [title]="'Background Color'">
+															        <option selected></option>
+															        <option value="red"></option>
+															        <option value="blue"></option>
+															        <option value="black"></option>
+														      	</select>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-link ql-active"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-image"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-code-block"></button>
+														    </span>
+													  	</div>
+													</quill-editor>
+												</div>
+											</div>
+							          	</pg-collapse>
+							          	<pg-collapse [Title]="'New Follow-up Template'" *ngFor="let addFollow of addFollowLists">
+							            	<div class="card card-default" class="addon" id="follow-up_{{addFollow}}">
+							            		<div class="set-follow-subject">
+								            		<!-- <select class="m-l-10">
+								            			<option *ngFor="let option of selectOnDayOptions" value="{{option.value}}">{{option.label}}</option>
+								            		</select> -->
+								            		<pg-select [(ngModel)]="selectedOption" [PlaceHolder]="'Select day'" AllowClear ShowSearch>
+													    <pg-option
+													    *ngFor="let option of selectFollowDayOptions"
+													    [Label]="option.label"
+													    [Value]="option"
+													    [Disabled]="option.disabled">
+													    </pg-option>
+													</pg-select>
+								            		<input placeholder="Subject  Re: My new beautiful campaign" class="subject" id="subject_follow{{addFollow}}">
+					            					<span class="exchange-icon"><i class="fa fa-exchange"></i></span>
+							            		</div>
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+						            				<div class="action-message">
+						            					<ng-container *ngIf="messageEditable; else save_message">
+						            						<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editMessage($event)"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+						            					</ng-container>
+						            					<ng-template #save_message>
+								            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveMessage($event)"><span><i class="fa fa-save"></i></span></a>
+						            					</ng-template>
+								            			<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteMessage(addFollow, 'follow')"><span><i class="fa fa-trash-o"></i></span></a>
+								            		</div>
+									            	<quill-editor [style]="{height: '180px'}"
+									            				placeholder="Insert Template"
+									            				(onSelectionChanged)="onSelectionChanged($event)"
+              													(onContentChanged)="onContentChanged($event)">
+													  	<div quill-editor-toolbar class="quill-editor-toolbar">
+														    <span class="ql-formats">
+														      	<button class="ql-bold" [title]="'Bold'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-italic" [title]="'Italic'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-underline" [title]="'Underline'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<select class="ql-background" [title]="'Background Color'">
+															        <option selected></option>
+															        <option value="red"></option>
+															        <option value="blue"></option>
+															        <option value="black"></option>
+														      	</select>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-link ql-active"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-image"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-code-block"></button>
+														    </span>
+													  	</div>
+													</quill-editor>
+												</div>
+											</div>
+							          	</pg-collapse>
+							          	<pg-collapse [Title]="'On Link Clicks'" *ngFor="let addon of addOnLists">
+							            	<div class="card card-default" class="addon">
+							            		<span class="on-click-info-icon"><i class="fa fa-info-circle blue-circle-icon"></i></span>
+							            		<div class="set-on-subject">
+							            			<pg-select [(ngModel)]="selectedOption" [PlaceHolder]="'Select day'" AllowClear ShowSearch>
+													    <pg-option
+													    *ngFor="let option of selectFollowDayOptions"
+													    [Label]="option.label"
+													    [Value]="option"
+													    [Disabled]="option.disabled">
+													    </pg-option>
+													</pg-select>
+							            			<input placeholder="Clicked link URL must exactly match:" class="subject">
+					            					<span class="question-icon"><i class="fa fa-question-circle blue-circle-icon"></i></span>
+													<input placeholder="Subject" class="subject">
+							            		</div>
+						            			<div class="card-body no-scroll card-toolbar input-textarea">
+						            				<div class="action-message">
+						            					<ng-container *ngIf="messageEditable; else save_message">
+						            						<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editMessage($event)"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+						            					</ng-container>
+						            					<ng-template #save_message>
+								            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="saveMessage($event)"><span><i class="fa fa-save"></i></span></a>
+						            					</ng-template>
+								            			<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="deleteMessage(addon, 'addon')"><span><i class="fa fa-trash-o"></i></span></a>
+								            		</div>
+									            	<quill-editor [style]="{height: '180px'}"
+									            				placeholder="Inset Message"
+									            				(onSelectionChanged)="onSelectionChanged($event)"
+              													(onContentChanged)="onContentChanged($event)">
+													  	<div quill-editor-toolbar class="quill-editor-toolbar">
+														    <span class="ql-formats">
+														      	<button class="ql-bold" [title]="'Bold'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-italic" [title]="'Italic'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-underline" [title]="'Underline'"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<select class="ql-background" [title]="'Background Color'">
+															        <option selected></option>
+															        <option value="red"></option>
+															        <option value="blue"></option>
+															        <option value="black"></option>
+														      	</select>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-link ql-active"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-image"></button>
+														    </span>
+														    <span class="ql-formats">
+														    	<button class="ql-code-block"></button>
+														    </span>
+													  	</div>
+													</quill-editor>
+												</div>
+											</div>
+							          	</pg-collapse>
+							        </pg-collapseset>
+		            			</div>
+		            		</div>
+		            	</div>
+
+		            	<div class="row">
+		            		<div class="col-lg-10 offset-lg-1" style="display: inline-flex;">
+		            			<div><a href="javascript:void(0)" class="add-message" (click)="addFollowUpClick()">+ Add Follow-up</a></div>
+		            			<div class="m-l-35"><a href="javascript:void(0)" class="add-message" (click)="addOnClick()">+ Add On Click</a></div>
+		            		</div>
+		            	</div>
+		            </div>
+		        </pg-tab>
+		        <pg-tab>
+		            <ng-template #TabHeading>
+		                Prospects
+		            </ng-template>
+		            <div class="">
+			            <div class="row m-t-50 display-name">
+		            		<div class="col-md-3 campaign-name">
+		            			<input placeholder="Campaign Name" [(ngModel)]="campaignData.campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}" id="input_campaign_name">
+		            		</div>
+		            		<div class="col-md-2">
+	            				<ng-container *ngIf="disabled; else action_save">
+		            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+		            			</ng-container>
+		            			<ng-template #action_save>
+		            				<a class="m-l-15 ave-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+		            			</ng-template>
+		            		</div>
+		            	</div>
+
+		            	<div class="row m-t-30 no-padding">
+		            		<div class="col-lg-9 col-md-12 no-padding">
+							    <div class="split-view">
+							      	<div class="split-list" [class.slideLeft]="isEmailSelected">
+							        	<div class="input-group transparent">
+							        		<div class="input-group-prepend search-message-filter">
+							                    <span class="input-group-text transparent"><i class="pg pg-search m-l-30"></i></span>
+							                </div>
+							                <input type="text" class="form-control search-message-filter" [(ngModel)]="filterContactKeyword" placeholder="Type anywhere to search" id="filter_keyword" name="filter_keyword" (keyup)="searchContact($event)">
+						              	</div>
+								      	<pg-list-view-container  class="scrollable full-height">
+											<pg-list-item *ngFor="let emailGroup of emailList; let i = index">
+												<li class="item padding-15" [class.active]="item === selectedEmail">
+													<div class="thumbnail-wrapper d32 circular m-t-20"><img alt="" height="40" src="{{emailGroup.contact.dp}}" width="40"></div>
+													<div class="inline m-l-15 m-t-10">
+								                      	<a href="javascript:void(0)"><p class="recipients no-margin small">{{emailGroup.contact.name}}</p></a>
+								                      	<ul style="display: inline-flex; border-bottom: none;">
+								                      		<li *ngFor="let item of emailGroup.list; let j = index" style="padding: 2px;">
+								                      			<button type="button" class="btn select-email-btn btn-default" id="btn_{{i+1}}_{{j+1}}" (click)="onSelect(item, i, j)"><i>{{j+1}}</i></button>
+								                      		</li>
+								                      	</ul>
+								                    </div>
+								                    <div class="clearfix"></div>
+								                </li>
+											</pg-list-item>
+										</pg-list-view-container>
+							      	</div>
+							      	<div class="split-details">
+								        <ng-template #noResultBlock>
+								          	<div class="no-result" >
+								            	<h1>No email has been selected</h1>
+								          	</div>
+								        </ng-template>
+								        <div *ngIf="selectedEmail; else noResultBlock" class="email-content-wrapper">
+								          	<div class="actions-wrapper menuclipper bg-master-lightest scrollable">
+									            <ul class="actions menuclipper-menu no-margin p-l-20 d-flex">
+									              	<li class="d-lg-none d-xl-none">
+									                	<a href="javascript:void(0;)" (click)="onBack()" class="split-list-toggle"><i class="fa fa-angle-left"></i> All Inboxes</a>
+									              	</li>
+									              	<li class="no-padding"><a href="javascript:void(0)">{{selectedEmail.key | ordinal}} Message</a></li>
+									              	<li class="no-padding "><a href="javascript:void(0)" class="text-danger" (click)="editMailContent()">Edit</a>
+									              	</li>
+									            </ul>
+								            	<div class="clearfix"></div>
+								          	</div>
+								          	<div class="email-content">
+									            <div class="email-content-header">
+									              	<div class="thumbnail-wrapper d48 circular bordered">
+									                	<img width="40" height="40" alt="" src="{{selectedEmail.dp}}">
+									              	</div>
+									              	<div class="sender inline m-l-10">
+									                	<p class="name no-margin bold">
+									                    	{{selectedContact.contact.name}}
+									                	</p>
+									                	<p class="datetime no-margin">
+									                    	{{selectedContact.contact.email}}
+									                	</p>
+									                	<p class="datetime no-margin">
+									                    	{{selectedEmail.from.email}}
+									                	</p>
+									              	</div>
+									              	<div class="clearfix"></div>
+								              		<div class="subject m-t-20 m-b-50 semi-bold email-subject">
+								                  		Subject - {{selectedEmail.subject}}
+								              		</div>
+									            </div>
+								            	<div class="clearfix"></div>
+							            		<div class="email-content-body m-t-20" innerHTML="{{selectedEmail.body}}">
+								            	</div>
+								          	</div>
+								        </div>
+							      	</div>
+							    </div>
+		            		</div>
+		            		<div class="col-lg-3 col-md12 no-padding person-info-scrollable-card">
+		            			<pg-select [(ngModel)]="selectedList" [PlaceHolder]="'All Prospects'" AllowClear ShowSearch>
+			                    	<pg-option
+			                    	*ngFor="let option of listOptions"
+				                    [Label]="option.label"
+				                    [Value]="option"
+				                    [Disabled]="option.disabled">
+				                  	</pg-option>
+			                  	</pg-select>
+							    <div class="scrollbar" id="custom_scrollbar">
+						      		<div class="force-overflow">
+						      			<div class="profile-section">
+							      			<div style="display: inline-flex;">
+							      				<div class="profile-image">
+								      				<div class="thumbnail-wrapper d48 circular bordered m-t-10 m-l-10">
+									                	<img width="40" height="40" alt="" src="{{profileData.image}}">
+									              	</div>
+							      				</div>
+							      				<div class="name">
+								      				<p class="profile-name">{{profileData.contactDetails.name}}</p>
+							      					<div class="social-icon-group">
+							      						<a href="javascript:void(0)"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+				                                        <a href="javascript:void(0)"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+				                                        <a href="javascript:void(0)"><span class="social-icon fa fa-facebook"></span></a>
+							      					</div>
+							      				</div>
+							      				<div class="more-icon dropdown pull-right d-lg-block d-none">
+					                                <button class="profile-dropdown-toggle more-icon-btn" type="button">
+					                                    <span><i class="fa fa-ellipsis-v"></i></span>
+					                                </button>
+					                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+					                                    <a href="javascript:void(0)" class="dropdown-item">Mark as Lead</a>
+					                                    <a href="javascript:void(0)" class="dropdown-item">Unsubscribe</a>
+					                                    <a href="javascript:void(0)" class="dropdown-item">Delete</a>
+					                                </div>
+					                            </div>
+								      			<!-- <div class="more-icon"><a href="javascript:void(0)"><span><i class="fa fa-ellipsis-v"></i></span></a></div> -->
+							      			</div>
+							      			<div class="row no-margin position" style="font-size: 12px;">
+							      				<span><i class="fa fa-map-marker"></i></span>
+							      				<span class="m-l-15">11:00 AM in {{profileData.city}}, {{profileData.state}}</span>
+							      			</div>
+							      			<div class="row no-margin pointer">
+							      				<span class="m-l-15"><i class="fa fa-eye"></i></span>
+							      				<span class="m-l-15"><i class="fa fa-hand-o-up"></i></span>
+							      				<span class="m-l-15"><i class="fa fa-mail-reply"></i></span>
+							      			</div>
+							      			<div class="row no-margin position" style="font-size: 16px;">
+							      				<span><i class="fa fa-user-md"></i></span>
+							      				<span class="m-l-15">{{profileData.contactDetails.role}}, Email</span>
+							      			</div>
+							      			<div class="row no-margin position">
+							      				<div class="input-group-prepend">
+		                                            <span class="input-group-text transparent"><span class="pg pg-mail email-status-{{ profileData.businessEmail.status }}"></span>
+		                                            </span>
+		                                        </div>
+		                                        <input type="text" placeholder="Username" class="form-control profile-email" value="{{ profileData.businessEmail.email }}" disabled>
+		                                        <div class="input-group-append">
+		                                            <span class="input-group-text transparent"><i class="fa fa-copy"></i>
+		                                            </span>
+		                                        </div>
+							      			</div>
+							      			<div class="row no-margin position" style="font-size: 12px;">
+							      				<span><i class="fa fa-phone"></i></span>
+							      				<span class="m-l-15">+1 {{ profileData.phone }}</span>
+							      			</div>
+							      			<div class="row no-margin position profile-description" style="font-size: 12px;">
+							      				<div><span><i class="fa fa-file-text-o"></i></span></div>
+							      				<div class="m-l-15">
+							      					<ng-container  *ngIf="viewMoreProfile; else full_description">
+							      						<span class="description">{{ profileData.description | slice:0:74 }}</span><a href="javascript:void(0)" (click)="showMoreDetail('profile')"><span>... view more</span></a>
+							      					</ng-container>
+							      					<ng-template #full_description>
+							      						<span class="full-description">{{profileData.description}}</span><a href="javascript:void(0)" (click)="showLess('profile')"><span>... less</span></a>
+							      					</ng-template>
+							      				</div>
+							      			</div>
+							      			<div class="row no-margin position">
+							      				<span><i class="fa fa-university"></i></span>
+							      				<span class="m-l-15">{{profileData.university}}</span>
+							      			</div>
+						      			</div>
+						      			<div class="company-section m-t-30">
+						      				<div style="display: inline-flex;">
+							      				<div class="profile-image">
+								      				<div class="thumbnail-wrapper d48 circular bordered m-t-10 m-l-10">
+									                	<img width="40" height="40" alt="" src="{{profileData.companyDetails.image}}">
+									              	</div>
+							      				</div>
+							      				<div class="name">
+								      				<p class="profile-name">{{profileData.companyDetails.name}}</p>
+							      					<div class="social-icon-group">
+							      						<a href="javascript:void(0)"><span class="social-icon fa fa-linkedin"></span><span>&nbsp;</span></a>
+				                                        <a href="javascript:void(0)"><span class="social-icon fa fa-twitter"></span><span>&nbsp;</span></a>
+				                                        <a href="javascript:void(0)"><span class="social-icon fa fa-facebook"></span></a>
+							      					</div>
+							      				</div>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 12px;">
+							      				<span><i class="fa fa-globe"></i></span>
+							      				<a href="http://{{profileData.companyDetails.link}}"><span class="m-l-15">{{profileData.companyDetails.link}}</span></a>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 10px;">
+							      				<span><i class="fa fa-map-marker"></i></span>
+							      				<span class="m-l-15">{{profileData.companyDetails.address}}</span>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 12px;">
+							      				<span><i class="fa fa-phone"></i></span>
+							      				<span class="m-l-15">{{profileData.companyDetails.phone}}</span>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 12px;">
+							      				<span><i class="fa fa-area-chart"></i></span>
+							      				<span class="m-l-15">Retail</span>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 12px;">
+							      				<span><i class="fa fa-group"></i></span>
+							      				<span class="m-l-15">51-200</span>
+							      			</div>
+							      			<div class="row no-margin company-position" style="font-size: 12px;">
+							      				<span><i class="fa fa-university"></i></span>
+							      				<span class="m-l-15">51-200</span>
+							      			</div>
+							      			<div class="row no-margin company-position company-description" style="font-size: 12px;">
+							      				<div><span><i class="fa fa-file-text-o"></i></span></div>
+							      				<div class="m-l-15">
+							      					<ng-container  *ngIf="viewMoreCompany; else company_full_description">
+							      						<span class="description">{{ profileData.companyDetails.description | slice:0:74 }}</span><a href="javascript:void(0)" (click)="showMoreDetail('company')"><span>... view more</span></a>
+							      					</ng-container>
+							      					<ng-template #company_full_description>
+							      						<span class="full-description">{{profileData.companyDetails.description}}</span><a href="javascript:void(0)" (click)="showLess('company')"><span>... less</span></a>
+							      					</ng-template>
+							      				</div>
+							      			</div>
+						      			</div>
+						      		</div>
+							    </div>
+		            		</div>
+						</div>
+		            </div>
+
+		        </pg-tab>
+		        <pg-tab>
+		            <ng-template #TabHeading>
+		                Settings
+		            </ng-template>
+		            <div id="campaign_detail_settings">
+		            	<div class="row m-t-50 display-name">
+		            		<div class="col-md-3 campaign-name">
+		            			<input placeholder="Campaign Name" [(ngModel)]="campaignData.campaignName" [typeahead]="states"  [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="5" class="form-control input-campaign-name" disabled="{{disabled}}" id="input_campaign_name">
+		            		</div>
+		            		<div class="col-md-2">
+	            				<ng-container *ngIf="disabled; else action_save">
+		            				<a class="m-l-15 edit-save-btn" href="javascript:void(0)" (click)="editCampaignName()"><span><i class="fa fa-pencil campaign-edit"></i></span></a>
+		            			</ng-container>
+		            			<ng-template #action_save>
+		            				<a class="m-l-15 ave-btn" href="javascript:void(0)" (click)="saveCampaignName()"><span><i class="fa fa-save"></i></span></a>
+		            			</ng-template>
+		            		</div>
+		            	</div>
+		            	<div class="row m-t-40">
+	            			<div class="col-lg-4 offset-lg-4 col-md-6">
+			                	<span class="help hint-text small m-l-10">Maximum email per day (max 300)</span>
+		                		<input type="number" class="form-control m-t-5 email-settings-input" max="300" min="0" [(ngModel)]="maximEmailPerDay">
+	            			</div>
+			            </div>
+			            <div class="row m-t-40">
+	            			<div class="col-lg-4 offset-lg-4 col-md-6">
+			                	<span class="help hint-text small m-l-10">Delay between each email (in seconds)</span>
+		                		<input type="number" class="form-control m-t-5 email-settings-input" max="59" min="0" [(ngModel)]="delayTime">
+	            			</div>
+			            </div>
+			            <div class="row m-t-40">
+	            			<div class="col-lg-4 offset-lg-4 col-md-6 email-settings-dropdown">
+			                	<span class="help hint-text small m-l-10">When contact replies</span>
+			                	<pg-select style="width: 100%;" [(ngModel)]="markStatus" [PlaceHolder]="markStatusOptions[0].label" AllowClear ShowSearch>
+				                    <pg-option
+				                    *ngFor="let option of markStatusOptions"
+				                    [Label]="option.label"
+				                    [Value]="option">
+				                  	</pg-option>
+			                  	</pg-select>
+	            			</div>
+			            </div>
+			            <div class="row m-t-40">
+	            			<div class="col-lg-4 offset-lg-4 col-md-6 email-settings-dropdown">
+			                	<span class="help hint-text small m-l-10">Mark contact as completed if no response after (attempts)</span>
+			                	<pg-select style="width: 100%;" [(ngModel)]="markStatus" [PlaceHolder]="'Select Option'" AllowClear ShowSearch>
+				                    <pg-option
+				                    *ngFor="let option of markStatusOptions"
+				                    [Label]="option.label"
+				                    [Value]="option">
+				                  	</pg-option>
+			                  	</pg-select>
+	            			</div>
+			            </div>
+			            <div class="row m-t-40">
+	            			<div class="col-lg-4 offset-lg-4 col-md-6 email-settings-dropdown">
+			                	<div class="input-group date">
+			                		<div class="input-group-prepend time-picker-icon">
+				                        <span class="input-group-text transparent">
+				                            <i class="pg pg-clock m-l-10"></i>
+				                        </span>
+				                    </div>
+				                    <pg-timepicker [(ngModel)]="_date"></pg-timepicker>
+			                  	</div>
+	            			</div>
+			            </div>
+			            <div class="row m-t-40">
+		            		<div class="col-lg-4 offset-lg-4 col-md-6 email-settings-checkbox">
+		            			<div class="checkbox check-success checkbox-circle" id="track_open">
+					              	<input type="checkbox" value="1" id="track_open_checkbox">
+					              	<label for="track_open_checkbox">Track Opens</label>
+					            </div>
+					            <span><i class="fa fa-info-circle blue-circle-icon track-info"></i></span>
+					            <div class="checkbox check-success checkbox-circle" id="track_click">
+					              	<input type="checkbox" value="1" id="track_click_checkbox">
+					              	<label for="track_click_checkbox">Track Clicks</label>
+					            </div>
+		            		</div>
+		            	</div>
+		            </div>
+		        </pg-tab>
+		    </pg-tabset>
+		</div>
+	</div>
+</pg-container>
+
+<div bsModal #editMailContentModal="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg edit-email-modal">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="editMailContentModal.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Edit Message</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div pgFormGroupDefault class="form-group form-group-default">
+                                <label>To Email</label>
+                                <input *ngIf="selectedContact" type="text" class="form-control" id="to_email" name="to_email" [(ngModel)]="selectedContact.contact.email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div pgFormGroupDefault class="form-group form-group-default">
+                                <label>From Email</label>
+                                <input *ngIf="selectedEmail" type="text" class="form-control" id="from_email" name="from_email" [(ngModel)]="selectedEmail.from.email">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                        	<div pgFormGroupDefault class="form-group form-group-default">
+	                            <label>Subject</label>
+	                            <input *ngIf="selectedEmail" type="text" class="form-control" id="subject_edit" name="subject_edit" [(ngModel)]="selectedEmail.subject">
+	                        </div>
+                        </div>
+                        <div class="col-md-12">
+                        	<div pgFormGroupDefault class="form-group form-group-default">
+	                            <label>Message</label>
+				            	<quill-editor *ngIf="selectedEmail"
+				            		[style]="{height: '180px'}"
+		        					[(ngModel)]="selectedEmail.body"
+		        					placeholder="Follow-up 1"
+		        					[modules]="quillConfig"
+		        					(onSelectionChanged)="firstFollowOnSelectionChanged($event)"
+									(onContentChanged)="firstFollowOnContentChanged($event)">
+								  	<div quill-editor-toolbar class="quill-editor-toolbar">
+									    <span class="ql-formats">
+									      	<button class="ql-bold" [title]="'Bold'"></button>
+									    </span>
+									    <span class="ql-formats">
+									    	<button class="ql-italic" [title]="'Italic'"></button>
+									    </span>
+									    <span class="ql-formats">
+									    	<button class="ql-underline" [title]="'Underline'"></button>
+									    </span>
+									    <span class="ql-formats">
+									    	<select class="ql-background" [title]="'Background Color'">
+										        <option selected></option>
+										        <option value="red"></option>
+										        <option value="blue"></option>
+										        <option value="black"></option>
+									      	</select>
+									    </span>
+									    <span class="ql-formats">
+									    	<button class="ql-link ql-active"></button>
+									    </span>
+									    <span class="ql-formats">
+									    	<button class="ql-image"></button>
+									    </span>
+									    <span class="ql-formats">
+									    	<button class="ql-code-block"></button>
+									    </span>
+								  	</div>
+								</quill-editor>
+	                        </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="editMailContentModal.hide()">Cancel</button>
+                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="changeMessage()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

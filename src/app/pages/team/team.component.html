@@ -1,0 +1,120 @@
+<pg-container>
+    <div class="card card-transparent">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="card-header ">
+                    <div class="pull-right">
+                        <div class="col-xs-12">
+                            <button (click)="addTeam()" class="btn btn-primary btn-cons"><i class="fa fa-plus"></i> New Teammate
+                            </button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card-body">
+                    <table class="table team-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Teams</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let team of teams; let i = index">
+                                <td class="team-member-profile" id="team_td_{{i}}">
+                                    <div class="team-image">
+                                        <img src="{{team.image}}">
+                                        <span class="status"><i class="fa fa-circle status--{{team.status}} fs-11"></i></span>
+                                    </div>
+                                    <div class="m-l-20">
+                                        <div class="team-name">{{team.name}}</div>
+                                        <div class="team-email">{{team.email}}</div>
+                                    </div>
+                                </td>
+                                <td id="status_td_{{i}}" class="status_td">
+                                    <span class="status"><i class="fa fa-circle status--{{team.status}} fs-11"></i></span>
+                                    <select [ngModel]="team.status" class="status-select m-l-5" (change)="changeStatus(i, $event)">
+                                        <option *ngFor="let option of statusOptions" value="{{option.value}}">{{option.label}}</option>
+                                    </select>
+                                </td>
+                                <td class="status_td">-</td>
+                                <td class="status_td"><a href="javascript:void(0)">Edit</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</pg-container>
+
+<div bsModal #mdSlideUp="bs-modal" class="modal fade slide-up disable-scroll" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+            <div class="modal-content">
+                <div class="modal-header clearfix text-left">
+                    <button type="button" class="close" (click)="mdSlideUp.hide()" aria-hidden="true"><i class="pg pg-close fs-14"></i>
+                    </button>
+                    <h5><span class="semi-bold">Add a teammate</span></h5>
+                </div>
+                <div class="modal-body m-t-30">
+                    <form class="" role="form" id="form-personal" autocomplete="off" #basicForm="ngForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="basicFormfname.invalid && (basicFormfname.dirty || basicFormfname.touched)" >
+                                    <label>First name</label>
+                                    <input type="text" class="form-control" id="fName" name="fName" [(ngModel)]="fName"  #basicFormfname="ngModel" required >
+                                </div>
+                                <div *ngIf="basicFormfname.invalid && (basicFormfname.dirty || basicFormfname.touched)" >
+                                    <label  *ngIf="basicFormfname.errors.required" class="error" >This field is required.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="basicFormlName.invalid && (basicFormlName.dirty || basicFormlName.touched)" >
+                                    <label>Last name</label>
+                                    <input type="text" class="form-control" id="lName" name="lName" [(ngModel)]="lName"  #basicFormlName="ngModel" required >
+                                </div>
+                                <div *ngIf="basicFormlName.invalid && (basicFormlName.dirty || basicFormlName.touched)" >
+                                    <label  *ngIf="basicFormlName.errors.required" class="error" >This field is required.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div pgFormGroupDefault class="form-group form-group-default required" [class.has-error]="basicFormemail.invalid && (basicFormemail.dirty || basicFormemail.touched)" >
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email"  #basicFormemail="ngModel" required >
+                            </div>
+                            <div *ngIf="basicFormemail.invalid && (basicFormemail.dirty || basicFormemail.touched)" >
+                                <label  *ngIf="basicFormemail.errors.required" class="error" >This field is required.</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row select-account-type">
+                        <div class="form-group form-group-default form-group-default-select2 required">
+                            <label class="">Project</label>
+                            <pg-select style="width: 100%;" [(ngModel)]="aType" [PlaceHolder]="'Select Account Type'" AllowClear ShowSearch>
+                                <pg-option
+                                *ngFor="let option of accountOptions"
+                                [Label]="option.label"
+                                [Value]="option"
+                                [Disabled]="option.disabled">
+                              </pg-option>
+                            </pg-select>
+                        </div>
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default pull-right" style="float: right;" (click)="closeModal()">Cancel</button>
+                            <button *ngIf="fName && lName && email && aType; else disabled_btn" type="button" class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="addNewTeam()">Add</button>
+                            <ng-template #disabled_btn>
+                                <button type="button" class="btn btn-primary disabled pull-right" style="margin-right: 10px;">Add</button>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
