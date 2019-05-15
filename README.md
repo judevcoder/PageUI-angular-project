@@ -1,9 +1,10 @@
-#About GetProfiles
+# About GetProfiles
 
 ## Name: Ash Pallickal
-![Alt text](https://github.com/chini9564/seveneo/s "Optional title")
+![Alt text](https://github.com/chini9564/seveneo/blob/master/ash.jpg "Optional title")
 
 ## Company: Getprofiles
+![Alt text](https://github.com/chini9564/seveneo/blob/master/getprofiles-logo.png "Optional title")
 
 ## Role: CEO & Founder
 
@@ -18,7 +19,7 @@ In short, he is a very low quality human with an intelligence that is closer to 
 It would not be an exaggeration to say he is animals.
 
 
-#Here are some his profile links
+# Here are some his profile links
 ## https://getprofiles.io/blog/author/pallickal/
 ## https://www.linkedin.com/in/ashpallickal/
 ## https://twitter.com/ashpallickal?lang=en
